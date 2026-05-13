@@ -86,15 +86,13 @@ export default function Index() {
       {/* ── Hero-шапка ── */}
       <header style={{ background: `linear-gradient(135deg, ${BRAND.navyDark} 0%, ${BRAND.navy} 60%, ${BRAND.navyLight} 100%)` }}>
         <div className="max-w-7xl mx-auto px-6 py-5 flex items-center justify-between">
-          <div className="flex items-center gap-5">
-            <div className="relative">
-              <div className="absolute inset-0 rounded-full blur-sm opacity-40" style={{ backgroundColor: BRAND.red }} />
-              <img
-                src="https://cdn.poehali.dev/projects/64a22a44-84da-402b-b52f-cd0f436152dc/bucket/6356785c-6fbe-4fd3-9669-7d40891d9663.png"
-                alt="СОПЗ логотип"
-                className="relative h-14 w-auto flex-shrink-0 brightness-0 invert"
-              />
-            </div>
+          <div className="flex items-center gap-4">
+            {/* Логотип Совета НКО при РОП — основной */}
+            <img
+              src="https://cdn.poehali.dev/projects/64a22a44-84da-402b-b52f-cd0f436152dc/bucket/bcaa3365-e019-4fe8-831f-e211788eb9a7.png"
+              alt="Совет НКО при РОП"
+              className="h-14 w-auto flex-shrink-0"
+            />
             <div>
               <h1 className="text-white font-bold text-base md:text-lg leading-snug">
                 Совет НКО при Российском обществе психиатров
@@ -104,10 +102,14 @@ export default function Index() {
               </p>
             </div>
           </div>
+          {/* Логотип СОПЗ — справа */}
           <a href="https://mental-health-russia.ru" target="_blank" rel="noopener noreferrer"
-            className="hidden md:flex items-center gap-1.5 text-white/60 hover:text-white text-xs transition-colors">
-            <Icon name="ExternalLink" size={13} />
-            mental-health-russia.ru
+            className="hidden md:flex items-center gap-3 group">
+            <img
+              src="https://cdn.poehali.dev/projects/64a22a44-84da-402b-b52f-cd0f436152dc/bucket/6356785c-6fbe-4fd3-9669-7d40891d9663.png"
+              alt="Союз охраны психического здоровья"
+              className="h-10 w-auto brightness-0 invert opacity-60 group-hover:opacity-90 transition-opacity"
+            />
           </a>
         </div>
 
@@ -169,8 +171,8 @@ export default function Index() {
       <footer style={{ backgroundColor: BRAND.navyDark }}>
         <div className="max-w-7xl mx-auto px-6 py-10 flex flex-col md:flex-row justify-between gap-8">
           <div className="flex items-center gap-4">
-            <img src="https://cdn.poehali.dev/projects/64a22a44-84da-402b-b52f-cd0f436152dc/bucket/6356785c-6fbe-4fd3-9669-7d40891d9663.png"
-              alt="СОПЗ" className="h-10 w-auto brightness-0 invert opacity-50" />
+            <img src="https://cdn.poehali.dev/projects/64a22a44-84da-402b-b52f-cd0f436152dc/bucket/bcaa3365-e019-4fe8-831f-e211788eb9a7.png"
+              alt="Совет НКО при РОП" className="h-10 w-auto opacity-70" />
             <div>
               <p className="text-white font-semibold text-sm">Совет НКО при РОП</p>
               <p className="text-white/40 text-xs mt-0.5">Союз охраны психического здоровья</p>
