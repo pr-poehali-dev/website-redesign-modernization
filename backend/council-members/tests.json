@@ -1,0 +1,28 @@
+{
+  "tests": [
+    {
+      "name": "Получить всех членов совета",
+      "method": "GET",
+      "path": "/",
+      "expectedStatus": 200,
+      "expectedBody": {"total": 104},
+      "bodyMatcher": "partial"
+    },
+    {
+      "name": "Поиск по имени",
+      "method": "GET",
+      "path": "/?search=Битова",
+      "expectedStatus": 200,
+      "expectedBody": {"members": []},
+      "bodyMatcher": "partial"
+    },
+    {
+      "name": "Фильтр по региону",
+      "method": "GET",
+      "path": "/?region=Москва",
+      "expectedStatus": 200,
+      "expectedBody": {"members": []},
+      "bodyMatcher": "partial"
+    }
+  ]
+}

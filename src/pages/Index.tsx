@@ -84,24 +84,7 @@ const ORG_COMMITTEE = [
   { name: "Козлов Андрей Павлович", role: "Член организационного комитета", region: "Казань" },
 ];
 
-// Состав совета — заглушка, заменяется данными из CSV/таблицы в ядре
-const COUNCIL_MEMBERS_FULL: { name: string; org: string; region: string }[] = [
-  { name: "Абрамова Светлана Игоревна", org: "АНО «Добрый путь»", region: "Москва" },
-  { name: "Алексеев Виктор Петрович", org: "БФ «Здоровье и право»", region: "Санкт-Петербург" },
-  { name: "Андреева Ольга Сергеевна", org: "НКО «Открытый диалог»", region: "Новосибирск" },
-  { name: "Баранов Михаил Юрьевич", org: "Фонд «Шаг навстречу»", region: "Екатеринбург" },
-  { name: "Белова Ирина Николаевна", org: "АНО «Помощь рядом»", region: "Казань" },
-  { name: "Борисова Татьяна Александровна", org: "НКО «Луч надежды»", region: "Краснодар" },
-  { name: "Васильев Дмитрий Олегович", org: "Фонд «Новая жизнь»", region: "Ростов-на-Дону" },
-  { name: "Григорьева Наталья Владимировна", org: "АНО «Интеграция»", region: "Пермь" },
-  { name: "Дмитриев Павел Сергеевич", org: "НКО «Равные права»", region: "Воронеж" },
-  { name: "Егорова Анна Михайловна", org: "БФ «Вместе сильнее»", region: "Самара" },
-  { name: "Жукова Людмила Петровна", org: "Фонд «Добросердие»", region: "Омск" },
-  { name: "Захаров Игорь Анатольевич", org: "АНО «Свет в окне»", region: "Уфа" },
-  { name: "Иванов Алексей Викторович", org: "НКО «Реабилитация»", region: "Челябинск" },
-  { name: "Кузнецова Елена Борисовна", org: "БФ «Помощь и поддержка»", region: "Красноярск" },
-  { name: "Лебедев Сергей Николаевич", org: "АНО «Открытые сердца»", region: "Волгоград" },
-];
+
 
 // Отчёты совета — заполняются реальными ссылками
 const REPORTS = [
@@ -297,18 +280,36 @@ const ABOUT_TABS = [
   { id: "reports", label: "Отчёты" },
 ];
 
+const COUNCIL_API = "https://functions.poehali.dev/82c58c82-b444-45d7-85ee-c95aa4d1b94c";
+
 function AboutSection() {
   const [tab, setTab] = useState("info");
   const [search, setSearch] = useState("");
   const [regionFilter, setRegionFilter] = useState("Все");
+  const [members, setMembers] = useState<{ num: number; name: string; organization: string; region: string }[]>([]);
+  const [regions, setRegions] = useState<string[]>(["Все"]);
+  const [total, setTotal] = useState(0);
+  const [loading, setLoading] = useState(false);
 
-  const regions = ["Все", ...Array.from(new Set(COUNCIL_MEMBERS_FULL.map((m) => m.region))).sort()];
-  const filtered = COUNCIL_MEMBERS_FULL.filter((m) => {
-    const matchSearch = m.name.toLowerCase().includes(search.toLowerCase()) ||
-      m.org.toLowerCase().includes(search.toLowerCase());
-    const matchRegion = regionFilter === "Все" || m.region === regionFilter;
-    return matchSearch && matchRegion;
-  });
+  const fetchMembers = (s: string, r: string) => {
+    setLoading(true);
+    const params = new URLSearchParams();
+    if (s) params.set("search", s);
+    if (r && r !== "Все") params.set("region", r);
+    fetch(`${COUNCIL_API}?${params.toString()}`)
+      .then((res) => res.json())
+      .then((data) => {
+        setMembers(data.members || []);
+        setRegions(data.regions || ["Все"]);
+        setTotal(data.total || 0);
+      })
+      .finally(() => setLoading(false));
+  };
+
+  useState(() => { fetchMembers("", "Все"); });
+
+  const handleSearch = (val: string) => { setSearch(val); fetchMembers(val, regionFilter); };
+  const handleRegion = (val: string) => { setRegionFilter(val); fetchMembers(search, val); };
 
   return (
     <div className="animate-slide-up">
@@ -460,7 +461,6 @@ function AboutSection() {
       {/* ── Вкладка: Состав совета ── */}
       {tab === "members" && (
         <div>
-          {/* Поиск и фильтр */}
           <div className="flex flex-col sm:flex-row gap-3 mb-5">
             <div className="relative flex-1">
               <Icon name="Search" size={15} className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400" />
@@ -468,25 +468,23 @@ function AboutSection() {
                 type="text"
                 placeholder="Поиск по имени или организации..."
                 value={search}
-                onChange={(e) => setSearch(e.target.value)}
+                onChange={(e) => handleSearch(e.target.value)}
                 className="w-full pl-9 pr-3 py-2.5 border border-gray-200 rounded text-sm focus:outline-none focus:border-blue-900 bg-white"
               />
             </div>
             <select
               value={regionFilter}
-              onChange={(e) => setRegionFilter(e.target.value)}
+              onChange={(e) => handleRegion(e.target.value)}
               className="border border-gray-200 rounded px-3 py-2.5 text-sm focus:outline-none bg-white text-gray-700"
             >
               {regions.map((r) => <option key={r}>{r}</option>)}
             </select>
           </div>
 
-          {/* Счётчик */}
           <p className="text-xs text-gray-400 mb-3">
-            Показано: {filtered.length} из {COUNCIL_MEMBERS_FULL.length} (полный список загружается из базы данных)
+            {loading ? "Загрузка..." : `Показано: ${members.length} из ${total}`}
           </p>
 
-          {/* Таблица */}
           <div className="bg-white border border-gray-200 rounded overflow-hidden">
             <table className="w-full text-sm">
               <thead>
@@ -498,34 +496,33 @@ function AboutSection() {
                 </tr>
               </thead>
               <tbody>
-                {filtered.map((m, idx) => (
-                  <tr key={idx}
-                    className="border-t border-gray-100 hover:bg-gray-50 transition-colors">
-                    <td className="px-4 py-3 text-gray-400 text-xs">{idx + 1}</td>
+                {loading && (
+                  <tr>
+                    <td colSpan={4} className="px-4 py-8 text-center text-gray-400 text-sm">
+                      <div className="flex items-center justify-center gap-2">
+                        <Icon name="Loader" size={16} className="animate-spin" />
+                        Загрузка данных...
+                      </div>
+                    </td>
+                  </tr>
+                )}
+                {!loading && members.map((m, idx) => (
+                  <tr key={idx} className="border-t border-gray-100 hover:bg-gray-50 transition-colors">
+                    <td className="px-4 py-3 text-gray-400 text-xs">{m.num}</td>
                     <td className="px-4 py-3 font-medium text-gray-800">{m.name}</td>
-                    <td className="px-4 py-3 text-gray-500 hidden md:table-cell">{m.org}</td>
+                    <td className="px-4 py-3 text-gray-500 hidden md:table-cell text-xs leading-snug">{m.organization}</td>
                     <td className="px-4 py-3">
-                      <span className="text-xs bg-gray-100 text-gray-600 px-2 py-0.5 rounded">{m.region}</span>
+                      <span className="text-xs bg-gray-100 text-gray-600 px-2 py-0.5 rounded whitespace-nowrap">{m.region}</span>
                     </td>
                   </tr>
                 ))}
-                {filtered.length === 0 && (
+                {!loading && members.length === 0 && (
                   <tr>
-                    <td colSpan={4} className="px-4 py-8 text-center text-gray-400 text-sm">
-                      Ничего не найдено
-                    </td>
+                    <td colSpan={4} className="px-4 py-8 text-center text-gray-400 text-sm">Ничего не найдено</td>
                   </tr>
                 )}
               </tbody>
             </table>
-          </div>
-
-          <div className="mt-4 p-4 bg-blue-50 border border-blue-100 rounded flex items-start gap-3">
-            <Icon name="Info" size={16} className="text-blue-500 flex-shrink-0 mt-0.5" />
-            <p className="text-xs text-blue-700">
-              Полный актуальный список членов совета загружается из базы данных. Для обновления данных
-              загрузите таблицу в формате CSV через панель управления Ядро.
-            </p>
           </div>
         </div>
       )}
