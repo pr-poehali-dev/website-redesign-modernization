@@ -84,79 +84,72 @@ export default function Index() {
     <div className="min-h-screen flex flex-col" style={{ backgroundColor: BRAND.bg, fontFamily: "'Inter', sans-serif" }}>
 
       {/* ── Шапка ── */}
-      <header className="bg-white shadow-sm border-b border-gray-100">
-        <div className="max-w-6xl mx-auto px-5 md:px-10 py-4 flex items-center justify-between">
-          <div className="flex items-center gap-4">
+      <header className="bg-white border-b border-gray-100 shadow-sm">
+        {/* Верхняя строка: логотип слева, навигация по центру, логотип справа */}
+        <div className="max-w-6xl mx-auto px-5 md:px-10">
+          <div className="flex items-center justify-between py-3 gap-6">
+
+            {/* Логотип Совета НКО — слева */}
             <img
               src="https://cdn.poehali.dev/projects/64a22a44-84da-402b-b52f-cd0f436152dc/bucket/bcaa3365-e019-4fe8-831f-e211788eb9a7.png"
               alt="Совет НКО при РОП"
-              className="h-[200px] w-auto flex-shrink-0"
+              className="h-16 w-auto flex-shrink-0"
             />
-            <div className="border-l border-gray-200 pl-4">
-              <h1 className="font-bold text-base md:text-lg leading-snug" style={{ color: BRAND.navyDark }}>
-                Совет НКО при Российском обществе психиатров
-              </h1>
-              <p className="text-gray-400 text-xs mt-0.5 tracking-wide">
-                Союз охраны психического здоровья · с 2018 года
-              </p>
-            </div>
-          </div>
-          <a href="https://mental-health-russia.ru" target="_blank" rel="noopener noreferrer"
-            className="hidden md:flex items-center gap-3 group">
-            <img
-              src="https://cdn.poehali.dev/projects/64a22a44-84da-402b-b52f-cd0f436152dc/bucket/6356785c-6fbe-4fd3-9669-7d40891d9663.png"
-              alt="Союз охраны психического здоровья"
-              className="h-12 w-auto opacity-70 group-hover:opacity-100 transition-opacity"
-            />
-          </a>
-        </div>
 
-        {/* Навигация */}
-        <div className="border-t border-gray-100" style={{ backgroundColor: BRAND.navy }}>
-          <div className="max-w-6xl mx-auto px-5 md:px-10">
-            <ul className="hidden md:flex">
+            {/* Навигация — по центру */}
+            <ul className="hidden md:flex items-center gap-1 flex-1 justify-center">
               {NAV_ITEMS.map((item) => {
                 const isActive = activeSection === item.id;
                 return (
                   <li key={item.id}>
                     <button
                       onClick={() => goTo(item.id)}
-                      className="px-5 py-3.5 text-sm font-medium transition-all duration-200 relative"
-                      style={{ color: isActive ? "#fff" : "rgba(255,255,255,0.55)" }}
+                      className="px-4 py-2 text-sm font-medium rounded-lg transition-all duration-200"
+                      style={{
+                        color: isActive ? BRAND.red : "#4B5563",
+                        backgroundColor: isActive ? `${BRAND.red}08` : "transparent",
+                        borderBottom: isActive ? `2px solid ${BRAND.red}` : "2px solid transparent",
+                        borderRadius: 0,
+                      }}
                     >
                       {item.label}
-                      {isActive && (
-                        <span className="absolute bottom-0 left-0 right-0 h-0.5 rounded-t-full"
-                          style={{ backgroundColor: BRAND.red }} />
-                      )}
                     </button>
                   </li>
                 );
               })}
             </ul>
-            {/* Mobile */}
-            <div className="md:hidden flex justify-between items-center py-3">
-              <span className="text-white text-sm font-medium">
-                {NAV_ITEMS.find((i) => i.id === activeSection)?.label}
-              </span>
-              <button onClick={() => setMobileMenuOpen(!mobileMenuOpen)} className="text-white p-1">
-                <Icon name={mobileMenuOpen ? "X" : "Menu"} size={22} />
-              </button>
-            </div>
-            {mobileMenuOpen && (
-              <ul className="md:hidden border-t border-white/10 py-2">
-                {NAV_ITEMS.map((item) => (
-                  <li key={item.id}>
-                    <button onClick={() => goTo(item.id)}
-                      className="w-full text-left px-4 py-3 text-sm font-medium"
-                      style={{ color: activeSection === item.id ? "#fff" : "rgba(255,255,255,0.6)" }}>
-                      {item.label}
-                    </button>
-                  </li>
-                ))}
-              </ul>
-            )}
+
+            {/* Логотип СОПЗ — справа, такой же высоты */}
+            <a href="https://mental-health-russia.ru" target="_blank" rel="noopener noreferrer"
+              className="hidden md:block group flex-shrink-0">
+              <img
+                src="https://cdn.poehali.dev/projects/64a22a44-84da-402b-b52f-cd0f436152dc/bucket/6356785c-6fbe-4fd3-9669-7d40891d9663.png"
+                alt="Союз охраны психического здоровья"
+                className="h-16 w-auto opacity-80 group-hover:opacity-100 transition-opacity"
+              />
+            </a>
+
+            {/* Mobile burger */}
+            <button onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+              className="md:hidden p-2" style={{ color: BRAND.navy }}>
+              <Icon name={mobileMenuOpen ? "X" : "Menu"} size={22} />
+            </button>
           </div>
+
+          {/* Mobile меню */}
+          {mobileMenuOpen && (
+            <ul className="md:hidden border-t border-gray-100 py-2">
+              {NAV_ITEMS.map((item) => (
+                <li key={item.id}>
+                  <button onClick={() => goTo(item.id)}
+                    className="w-full text-left px-4 py-3 text-sm font-medium"
+                    style={{ color: activeSection === item.id ? BRAND.red : "#4B5563" }}>
+                    {item.label}
+                  </button>
+                </li>
+              ))}
+            </ul>
+          )}
         </div>
       </header>
 
