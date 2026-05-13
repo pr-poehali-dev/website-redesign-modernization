@@ -89,18 +89,16 @@ export default function Index() {
         <div className="max-w-6xl mx-auto px-5 md:px-10">
           <div className="flex items-center justify-between py-3 gap-6">
 
-            {/* Логотипы — слева */}
+            {/* Логотип — слева */}
             <div className="flex items-center gap-3 flex-shrink-0">
               <img
                 src="https://cdn.poehali.dev/projects/64a22a44-84da-402b-b52f-cd0f436152dc/bucket/cd9d0e62-681a-4127-8664-3cce702a9a62.png"
                 alt="НКО логотип"
                 className="h-16 w-16 object-contain"
               />
-              <img
-                src="https://cdn.poehali.dev/projects/64a22a44-84da-402b-b52f-cd0f436152dc/bucket/d316c79e-d618-4023-8158-b08553c4ecdc.png"
-                alt="Совет НКО при РОП"
-                className="h-16 w-16 object-contain"
-              />
+              <span className="text-sm font-semibold text-[#1a3a5c] leading-tight hidden sm:block">
+                Совет НКО<br />при РОП
+              </span>
             </div>
 
             {/* Навигация — по центру */}
