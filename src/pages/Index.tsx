@@ -1,6 +1,15 @@
 import { useState } from "react";
 import Icon from "@/components/ui/icon";
 
+// Цвета бренда СОПЗ
+const BRAND = {
+  navy: "#2D3561",      // тёмно-синий из логотипа
+  red: "#C0392B",       // красный акцент из логотипа
+  navyLight: "#3D4771", // чуть светлее для hover
+  bg: "#F5F5F5",
+  white: "#FFFFFF",
+};
+
 const NAV_ITEMS = [
   { id: "about", label: "О совете" },
   { id: "groups", label: "Рабочие группы" },
@@ -49,30 +58,10 @@ const DOC_CATEGORIES = [
 ];
 
 const WORKING_GROUPS = [
-  {
-    title: "Рабочая группа по инклюзивному образованию",
-    chair: "Председатель: к.п.н. Иванова М.А.",
-    members: 7,
-    nextMeeting: "20 мая 2026",
-  },
-  {
-    title: "Рабочая группа по волонтерству",
-    chair: "Председатель: Петров С.В.",
-    members: 5,
-    nextMeeting: "27 мая 2026",
-  },
-  {
-    title: "Рабочая группа по правовым вопросам",
-    chair: "Председатель: д.ю.н. Сидорова Е.Н.",
-    members: 9,
-    nextMeeting: "3 июня 2026",
-  },
-  {
-    title: "Рабочая группа по общественному контролю",
-    chair: "Председатель: Козлов А.П.",
-    members: 6,
-    nextMeeting: "10 июня 2026",
-  },
+  { title: "Рабочая группа по инклюзивному образованию", chair: "Председатель: к.п.н. Иванова М.А.", members: 7, nextMeeting: "20 мая 2026" },
+  { title: "Рабочая группа по волонтерству", chair: "Председатель: Петров С.В.", members: 5, nextMeeting: "27 мая 2026" },
+  { title: "Рабочая группа по правовым вопросам", chair: "Председатель: д.ю.н. Сидорова Е.Н.", members: 9, nextMeeting: "3 июня 2026" },
+  { title: "Рабочая группа по общественному контролю", chair: "Председатель: Козлов А.П.", members: 6, nextMeeting: "10 июня 2026" },
 ];
 
 const EVENTS = [
@@ -99,7 +88,7 @@ export default function Index() {
   const [activeDocCategory, setActiveDocCategory] = useState<string | null>(null);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
-  const scrollToSection = (id: string) => {
+  const goTo = (id: string) => {
     setActiveSection(id);
     setMobileMenuOpen(false);
   };
@@ -117,69 +106,75 @@ export default function Index() {
   };
 
   return (
-    <div className="min-h-screen bg-background flex flex-col">
-      {/* Top bar */}
-      <div className="bg-[hsl(220,45%,18%)] text-white/70 text-xs py-2 px-6 flex justify-between items-center font-body">
-        <span>Независимый экспертный орган</span>
-        <span>Основан в 2018 году</span>
-      </div>
+    <div className="min-h-screen flex flex-col" style={{ backgroundColor: BRAND.bg, fontFamily: "'Inter', sans-serif" }}>
 
-      {/* Header */}
-      <header className="bg-white border-b border-border shadow-sm">
-        <div className="max-w-6xl mx-auto px-6 py-5 flex items-center gap-5">
-          <div className="w-12 h-12 bg-[hsl(220,45%,18%)] flex items-center justify-center flex-shrink-0">
-            <Icon name="Scale" size={22} className="text-[hsl(38,60%,60%)]" />
-          </div>
-          <div>
-            <h1 className="font-display text-xl font-semibold text-[hsl(220,45%,18%)] leading-tight">
-              Совет по правам человека в психиатрии
+      {/* ── Шапка ── */}
+      <header className="bg-white border-b border-gray-200 shadow-sm">
+        <div className="max-w-7xl mx-auto px-6 py-4 flex items-center gap-6">
+          {/* Логотип СОПЗ */}
+          <img
+            src="https://cdn.poehali.dev/projects/64a22a44-84da-402b-b52f-cd0f436152dc/bucket/6356785c-6fbe-4fd3-9669-7d40891d9663.png"
+            alt="СОПЗ логотип"
+            className="h-16 w-auto flex-shrink-0"
+          />
+          <div className="border-l border-gray-200 pl-6">
+            <h1 className="text-base font-bold leading-snug" style={{ color: BRAND.navy }}>
+              Совет НКО при Российском обществе психиатров
             </h1>
-            <p className="font-body text-xs text-muted-foreground mt-0.5 tracking-wide uppercase">
-              Независимый экспертный орган
+            <p className="text-xs text-gray-500 mt-0.5">
+              Независимый экспертный орган в сфере охраны психического здоровья
             </p>
           </div>
         </div>
       </header>
 
-      {/* Navigation */}
-      <nav className="bg-[hsl(220,45%,18%)] sticky top-0 z-40">
-        <div className="max-w-6xl mx-auto px-6">
-          <ul className="hidden md:flex gap-0">
-            {NAV_ITEMS.map((item) => (
-              <li key={item.id}>
-                <button
-                  onClick={() => scrollToSection(item.id)}
-                  className={`font-body text-sm px-5 py-4 transition-colors duration-200 border-b-2 ${
-                    activeSection === item.id
-                      ? "text-[hsl(38,60%,60%)] border-[hsl(38,60%,60%)]"
-                      : "text-white/80 border-transparent hover:text-white hover:border-white/30"
-                  }`}
-                >
-                  {item.label}
-                </button>
-              </li>
-            ))}
+      {/* ── Навигация — точно как на mental-health-russia.ru ── */}
+      <nav className="bg-white border-b border-gray-200 sticky top-0 z-40 shadow-sm">
+        <div className="max-w-7xl mx-auto px-6">
+          {/* Desktop */}
+          <ul className="hidden md:flex">
+            {NAV_ITEMS.map((item) => {
+              const isActive = activeSection === item.id;
+              return (
+                <li key={item.id}>
+                  <button
+                    onClick={() => goTo(item.id)}
+                    className="relative px-5 py-4 text-sm font-medium transition-colors duration-150"
+                    style={{
+                      color: isActive ? BRAND.red : "#374151",
+                      borderBottom: isActive ? `2px solid ${BRAND.red}` : "2px solid transparent",
+                    }}
+                    onMouseEnter={(e) => {
+                      if (!isActive) (e.currentTarget as HTMLElement).style.color = BRAND.red;
+                    }}
+                    onMouseLeave={(e) => {
+                      if (!isActive) (e.currentTarget as HTMLElement).style.color = "#374151";
+                    }}
+                  >
+                    {item.label}
+                  </button>
+                </li>
+              );
+            })}
           </ul>
 
           {/* Mobile */}
           <div className="md:hidden flex justify-between items-center py-3">
-            <span className="text-white/80 text-sm font-body">
+            <span className="text-sm font-medium" style={{ color: BRAND.navy }}>
               {NAV_ITEMS.find((i) => i.id === activeSection)?.label}
             </span>
-            <button onClick={() => setMobileMenuOpen(!mobileMenuOpen)} className="text-white p-1">
+            <button onClick={() => setMobileMenuOpen(!mobileMenuOpen)} style={{ color: BRAND.navy }}>
               <Icon name={mobileMenuOpen ? "X" : "Menu"} size={22} />
             </button>
           </div>
-
           {mobileMenuOpen && (
-            <ul className="md:hidden border-t border-white/10 py-2">
+            <ul className="md:hidden border-t border-gray-100 py-2">
               {NAV_ITEMS.map((item) => (
                 <li key={item.id}>
                   <button
-                    onClick={() => scrollToSection(item.id)}
-                    className={`w-full text-left font-body text-sm px-4 py-3 transition-colors ${
-                      activeSection === item.id ? "text-[hsl(38,60%,60%)]" : "text-white/80"
-                    }`}
+                    onClick={() => goTo(item.id)}
+                    className="w-full text-left px-4 py-3 text-sm font-medium"
+                    style={{ color: activeSection === item.id ? BRAND.red : "#374151" }}
                   >
                     {item.label}
                   </button>
@@ -190,21 +185,31 @@ export default function Index() {
         </div>
       </nav>
 
-      {/* Main */}
-      <main className="flex-1 max-w-6xl mx-auto w-full px-6 py-10 animate-fade-in">
+      {/* ── Контент ── */}
+      <main className="flex-1 max-w-7xl mx-auto w-full px-6 py-8 animate-fade-in">
         {renderSection()}
       </main>
 
-      {/* Footer */}
-      <footer className="bg-[hsl(220,45%,12%)] text-white/60 py-8 mt-auto">
-        <div className="max-w-6xl mx-auto px-6 flex flex-col md:flex-row justify-between gap-4">
-          <div>
-            <p className="font-display text-white text-lg">Совет по правам человека в психиатрии</p>
-            <p className="font-body text-sm mt-1">Независимый экспертный орган</p>
+      {/* ── Подвал ── */}
+      <footer className="text-white py-8 mt-auto" style={{ backgroundColor: BRAND.navy }}>
+        <div className="max-w-7xl mx-auto px-6 flex flex-col md:flex-row justify-between gap-6 items-start">
+          <div className="flex items-center gap-4">
+            <img
+              src="https://cdn.poehali.dev/projects/64a22a44-84da-402b-b52f-cd0f436152dc/bucket/6356785c-6fbe-4fd3-9669-7d40891d9663.png"
+              alt="СОПЗ"
+              className="h-12 w-auto brightness-0 invert opacity-80"
+            />
+            <div>
+              <p className="font-semibold text-sm">Совет НКО при РОП</p>
+              <p className="text-xs text-white/60 mt-0.5">Союз охраны психического здоровья</p>
+            </div>
           </div>
-          <div className="font-body text-sm">
+          <div className="text-sm text-white/60 space-y-1">
             <p>© 2018–2026 Все права защищены</p>
-            <p className="mt-1">Москва, Россия</p>
+            <a href="https://mental-health-russia.ru" target="_blank" rel="noopener noreferrer"
+              className="text-white/80 hover:text-white transition-colors">
+              mental-health-russia.ru
+            </a>
           </div>
         </div>
       </footer>
@@ -212,20 +217,40 @@ export default function Index() {
   );
 }
 
-/* ───── ABOUT ───── */
+/* ─── Заголовок раздела ─── */
+function SectionHeader({ title, subtitle }: { title: string; subtitle?: string }) {
+  return (
+    <div className="mb-8 pb-4 border-b-2" style={{ borderColor: BRAND.navy }}>
+      <h2 className="text-2xl font-bold" style={{ color: BRAND.navy }}>{title}</h2>
+      {subtitle && <p className="text-sm text-gray-500 mt-1">{subtitle}</p>}
+    </div>
+  );
+}
+
+/* ─── NavyBox: синяя кнопка/бейдж ─── */
+function NavyTag({ children }: { children: React.ReactNode }) {
+  return (
+    <span className="inline-block text-white text-xs font-semibold px-2 py-0.5 rounded-sm"
+      style={{ backgroundColor: BRAND.navy }}>
+      {children}
+    </span>
+  );
+}
+
+/* ─────────────────────────────── */
+/* ── О СОВЕТЕ ── */
+/* ─────────────────────────────── */
 function AboutSection() {
   return (
     <div className="animate-slide-up">
-      <div className="border-l-4 border-[hsl(38,60%,48%)] pl-6 mb-10">
-        <h2 className="font-display text-4xl font-semibold text-[hsl(220,45%,18%)] leading-tight">О совете</h2>
-        <p className="font-body text-muted-foreground mt-2 text-sm tracking-wide uppercase">Независимый экспертный орган с 2018 года</p>
-      </div>
+      <SectionHeader title="О совете" subtitle="Независимый экспертный орган с 2018 года" />
 
-      <div className="grid md:grid-cols-3 gap-8 mb-12">
-        <div className="md:col-span-2 space-y-4 font-body text-[15px] leading-relaxed text-foreground/85">
+      <div className="grid md:grid-cols-3 gap-8 mb-10">
+        <div className="md:col-span-2 space-y-4 text-[15px] leading-relaxed text-gray-700">
           <p>
-            Совет по правам человека в психиатрии является независимым экспертным органом,
-            деятельность которого направлена на обеспечение соблюдения прав и законных интересов
+            Совет НКО при Российском обществе психиатров (РОП) является независимым экспертным органом,
+            объединяющим некоммерческие организации в сфере охраны психического здоровья.
+            Деятельность Совета направлена на обеспечение соблюдения прав и законных интересов
             лиц с психическими расстройствами в Российской Федерации.
           </p>
           <p>
@@ -239,30 +264,34 @@ function AboutSection() {
             прав уязвимых групп населения.
           </p>
         </div>
-        <div className="space-y-4">
+
+        {/* Статистика */}
+        <div className="grid grid-cols-2 gap-3">
           {[
             { label: "Лет работы", value: "8" },
             { label: "Членов совета", value: "24" },
             { label: "Рабочих групп", value: "4" },
             { label: "Документов", value: "69+" },
           ].map((stat) => (
-            <div key={stat.label} className="bg-white border border-border p-4">
-              <div className="font-display text-3xl font-semibold text-[hsl(220,45%,18%)]">{stat.value}</div>
-              <div className="font-body text-xs text-muted-foreground mt-1 uppercase tracking-wide">{stat.label}</div>
+            <div key={stat.label} className="bg-white rounded border border-gray-200 p-4 text-center">
+              <div className="text-3xl font-bold" style={{ color: BRAND.navy }}>{stat.value}</div>
+              <div className="text-xs text-gray-500 mt-1">{stat.label}</div>
             </div>
           ))}
         </div>
       </div>
 
+      {/* Состав */}
       <div className="section-divider pt-8">
-        <h3 className="font-display text-2xl font-semibold text-[hsl(220,45%,18%)] mb-6">Состав совета</h3>
+        <h3 className="text-lg font-bold mb-5" style={{ color: BRAND.navy }}>Состав совета</h3>
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-4">
           {COUNCIL_MEMBERS.map((member) => (
-            <div key={member.name} className="bg-white border border-border p-5 hover:border-[hsl(220,45%,35%)] transition-colors duration-200">
-              <div className="w-8 h-1 bg-[hsl(38,60%,48%)] mb-3" />
-              <p className="font-body font-semibold text-[hsl(220,45%,18%)] text-sm leading-snug">{member.name}</p>
-              <p className="font-body text-xs text-muted-foreground mt-1">{member.role}</p>
-              <p className="font-body text-xs text-[hsl(38,60%,45%)] mt-0.5 italic">{member.degree}</p>
+            <div key={member.name}
+              className="bg-white border border-gray-200 rounded p-5 hover:border-gray-400 hover:shadow-sm transition-all duration-200">
+              <div className="w-8 h-1 mb-3 rounded-full" style={{ backgroundColor: BRAND.red }} />
+              <p className="font-semibold text-sm leading-snug" style={{ color: BRAND.navy }}>{member.name}</p>
+              <p className="text-xs text-gray-500 mt-1">{member.role}</p>
+              <p className="text-xs mt-0.5 italic" style={{ color: BRAND.red }}>{member.degree}</p>
             </div>
           ))}
         </div>
@@ -271,55 +300,57 @@ function AboutSection() {
   );
 }
 
-/* ───── WORKING GROUPS ───── */
+/* ─────────────────────────────── */
+/* ── РАБОЧИЕ ГРУППЫ ── */
+/* ─────────────────────────────── */
 function GroupsSection() {
   return (
     <div className="animate-slide-up">
-      <div className="border-l-4 border-[hsl(38,60%,48%)] pl-6 mb-10">
-        <h2 className="font-display text-4xl font-semibold text-[hsl(220,45%,18%)]">Рабочие группы</h2>
-        <p className="font-body text-muted-foreground mt-2 text-sm">Специализированные экспертные группы по ключевым направлениям</p>
-      </div>
+      <SectionHeader title="Рабочие группы" subtitle="Специализированные экспертные группы по ключевым направлениям" />
 
-      <div className="grid md:grid-cols-2 gap-6">
+      <div className="grid md:grid-cols-2 gap-5">
         {WORKING_GROUPS.map((group, idx) => (
-          <div key={idx} className="bg-white border border-border p-6 hover:shadow-md transition-shadow duration-200">
+          <div key={idx}
+            className="bg-white border border-gray-200 rounded p-6 hover:shadow-md transition-shadow duration-200">
             <div className="flex items-start justify-between mb-4">
-              <div className="w-10 h-10 bg-[hsl(220,45%,18%)] flex items-center justify-center flex-shrink-0">
-                <span className="font-display text-[hsl(38,60%,60%)] font-semibold text-lg">{idx + 1}</span>
+              <div className="w-10 h-10 flex items-center justify-center text-white text-lg font-bold rounded"
+                style={{ backgroundColor: BRAND.navy }}>
+                {idx + 1}
               </div>
-              <span className="font-body text-xs bg-[hsl(216,20%,93%)] text-muted-foreground px-2 py-1">
-                {group.members} участников
-              </span>
+              <NavyTag>{group.members} участн.</NavyTag>
             </div>
-            <h3 className="font-display text-xl font-semibold text-[hsl(220,45%,18%)] leading-snug mb-2">{group.title}</h3>
-            <p className="font-body text-sm text-muted-foreground mb-4">{group.chair}</p>
-            <div className="border-t border-border pt-4 flex items-center gap-2">
-              <Icon name="Calendar" size={14} className="text-[hsl(38,60%,48%)]" />
-              <span className="font-body text-xs text-muted-foreground">
-                Следующее заседание: <span className="font-medium text-foreground">{group.nextMeeting}</span>
+            <h3 className="font-semibold text-base leading-snug mb-2" style={{ color: BRAND.navy }}>
+              {group.title}
+            </h3>
+            <p className="text-sm text-gray-500 mb-4">{group.chair}</p>
+            <div className="border-t border-gray-100 pt-4 flex items-center gap-2">
+              <Icon name="Calendar" size={14} style={{ color: BRAND.red }} />
+              <span className="text-xs text-gray-500">
+                Следующее заседание:{" "}
+                <span className="font-semibold text-gray-700">{group.nextMeeting}</span>
               </span>
             </div>
           </div>
         ))}
       </div>
 
-      <div className="mt-8 bg-[hsl(220,45%,18%)] text-white p-6">
-        <div className="flex items-start gap-4">
-          <Icon name="Info" size={20} className="text-[hsl(38,60%,60%)] flex-shrink-0 mt-0.5" />
-          <div>
-            <p className="font-body font-medium text-sm mb-1">Участие в рабочих группах</p>
-            <p className="font-body text-sm text-white/70">
-              Для участия в заседаниях рабочих групп или вступления в их состав обратитесь к ответственному секретарю.
-              Заседания открыты для аккредитованных наблюдателей.
-            </p>
-          </div>
+      <div className="mt-6 rounded p-5 flex items-start gap-4 text-white" style={{ backgroundColor: BRAND.navy }}>
+        <Icon name="Info" size={18} className="flex-shrink-0 mt-0.5" style={{ color: "#f8b4b4" }} />
+        <div>
+          <p className="font-semibold text-sm mb-1">Участие в рабочих группах</p>
+          <p className="text-sm text-white/75">
+            Для участия в заседаниях рабочих групп или вступления в их состав обратитесь к ответственному секретарю.
+            Заседания открыты для аккредитованных наблюдателей.
+          </p>
         </div>
       </div>
     </div>
   );
 }
 
-/* ───── METHODICAL MATERIALS ───── */
+/* ─────────────────────────────── */
+/* ── МЕТОДИЧЕСКИЕ МАТЕРИАЛЫ ── */
+/* ─────────────────────────────── */
 function MaterialsSection() {
   const materials = [
     { title: "Методическое руководство по организации психиатрической помощи", year: "2025", type: "Руководство", pages: 84 },
@@ -332,28 +363,26 @@ function MaterialsSection() {
 
   return (
     <div className="animate-slide-up">
-      <div className="border-l-4 border-[hsl(38,60%,48%)] pl-6 mb-10">
-        <h2 className="font-display text-4xl font-semibold text-[hsl(220,45%,18%)]">Методические материалы</h2>
-        <p className="font-body text-muted-foreground mt-2 text-sm">Руководства, стандарты и рекомендации для специалистов</p>
-      </div>
-
-      <div className="space-y-3">
+      <SectionHeader title="Методические материалы" subtitle="Руководства, стандарты и рекомендации для специалистов" />
+      <div className="space-y-2">
         {materials.map((mat, idx) => (
-          <div key={idx} className="bg-white border border-border flex items-center gap-4 p-4 hover:border-[hsl(220,45%,35%)] hover:shadow-sm transition-all duration-200 cursor-pointer group">
-            <div className="w-10 h-12 bg-[hsl(216,20%,93%)] flex items-center justify-center flex-shrink-0">
-              <Icon name="FileText" size={18} className="text-[hsl(220,45%,35%)]" />
+          <div key={idx}
+            className="bg-white border border-gray-200 rounded flex items-center gap-4 p-4 hover:border-gray-400 hover:shadow-sm transition-all duration-200 cursor-pointer group">
+            <div className="w-10 h-12 flex items-center justify-center rounded flex-shrink-0"
+              style={{ backgroundColor: "#EFF2FB" }}>
+              <Icon name="FileText" size={18} style={{ color: BRAND.navy }} />
             </div>
             <div className="flex-1 min-w-0">
-              <p className="font-body font-medium text-sm text-[hsl(220,45%,18%)] group-hover:text-[hsl(220,45%,30%)] leading-snug">{mat.title}</p>
+              <p className="font-medium text-sm leading-snug group-hover:underline" style={{ color: BRAND.navy }}>
+                {mat.title}
+              </p>
               <div className="flex items-center gap-3 mt-1">
-                <span className="font-body text-xs text-muted-foreground">{mat.type}</span>
-                <span className="text-border">·</span>
-                <span className="font-body text-xs text-muted-foreground">{mat.pages} стр.</span>
-                <span className="text-border">·</span>
-                <span className="font-body text-xs text-muted-foreground">{mat.year}</span>
+                <NavyTag>{mat.type}</NavyTag>
+                <span className="text-xs text-gray-400">{mat.pages} стр.</span>
+                <span className="text-xs text-gray-400">{mat.year}</span>
               </div>
             </div>
-            <Icon name="Download" size={16} className="text-muted-foreground group-hover:text-[hsl(38,60%,48%)] flex-shrink-0 transition-colors" />
+            <Icon name="Download" size={16} className="flex-shrink-0 text-gray-400 group-hover:text-red-600 transition-colors" />
           </div>
         ))}
       </div>
@@ -361,7 +390,9 @@ function MaterialsSection() {
   );
 }
 
-/* ───── DOCUMENTS ───── */
+/* ─────────────────────────────── */
+/* ── ДОКУМЕНТЫ ── */
+/* ─────────────────────────────── */
 function DocumentsSection({
   activeCategory,
   setActiveCategory,
@@ -403,30 +434,29 @@ function DocumentsSection({
       <div className="animate-slide-up">
         <button
           onClick={() => setActiveCategory(null)}
-          className="flex items-center gap-2 font-body text-sm text-muted-foreground hover:text-foreground mb-8 transition-colors"
+          className="flex items-center gap-2 text-sm text-gray-500 hover:text-gray-800 mb-6 transition-colors"
         >
           <Icon name="ArrowLeft" size={16} />
           Все разделы
         </button>
-        <div className="border-l-4 border-[hsl(38,60%,48%)] pl-6 mb-8">
-          <h2 className="font-display text-3xl font-semibold text-[hsl(220,45%,18%)]">{cat.title}</h2>
-          <p className="font-body text-muted-foreground mt-1 text-sm">{cat.description}</p>
-        </div>
-        <div className="space-y-3">
+        <SectionHeader title={cat.title} subtitle={cat.description} />
+        <div className="space-y-2">
           {docs.map((doc, idx) => (
-            <div key={idx} className="bg-white border border-border flex items-center gap-4 p-4 hover:border-[hsl(220,45%,35%)] hover:shadow-sm transition-all duration-200 cursor-pointer group">
-              <div className="w-10 h-12 bg-[hsl(216,20%,93%)] flex items-center justify-center flex-shrink-0">
-                <Icon name="FileText" size={18} className="text-[hsl(220,45%,35%)]" />
+            <div key={idx}
+              className="bg-white border border-gray-200 rounded flex items-center gap-4 p-4 hover:border-gray-400 hover:shadow-sm transition-all duration-200 cursor-pointer group">
+              <div className="w-10 h-12 flex items-center justify-center rounded flex-shrink-0"
+                style={{ backgroundColor: "#EFF2FB" }}>
+                <Icon name="FileText" size={18} style={{ color: BRAND.navy }} />
               </div>
               <div className="flex-1 min-w-0">
-                <p className="font-body font-medium text-sm text-[hsl(220,45%,18%)] group-hover:text-[hsl(220,45%,30%)]">{doc.title}</p>
+                <p className="font-medium text-sm group-hover:underline" style={{ color: BRAND.navy }}>{doc.title}</p>
                 <div className="flex items-center gap-3 mt-1">
-                  <span className="font-body text-xs text-muted-foreground">{doc.num}</span>
-                  <span className="text-border">·</span>
-                  <span className="font-body text-xs text-muted-foreground">{doc.date}</span>
+                  <span className="text-xs text-gray-400">{doc.num}</span>
+                  <span className="text-gray-300">·</span>
+                  <span className="text-xs text-gray-400">{doc.date}</span>
                 </div>
               </div>
-              <Icon name="Download" size={16} className="text-muted-foreground group-hover:text-[hsl(38,60%,48%)] flex-shrink-0 transition-colors" />
+              <Icon name="Download" size={16} className="flex-shrink-0 text-gray-400 group-hover:text-red-600 transition-colors" />
             </div>
           ))}
         </div>
@@ -436,33 +466,29 @@ function DocumentsSection({
 
   return (
     <div className="animate-slide-up">
-      <div className="border-l-4 border-[hsl(38,60%,48%)] pl-6 mb-10">
-        <h2 className="font-display text-4xl font-semibold text-[hsl(220,45%,18%)]">Документы</h2>
-        <p className="font-body text-muted-foreground mt-2 text-sm">Выберите раздел для просмотра документов</p>
-      </div>
-
-      <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-5">
+      <SectionHeader title="Документы" subtitle="Выберите раздел для просмотра документов" />
+      <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-4">
         {DOC_CATEGORIES.map((cat) => (
           <button
             key={cat.id}
             onClick={() => setActiveCategory(cat.id)}
-            className="bg-white border border-border p-6 text-left hover:border-[hsl(220,45%,35%)] hover:shadow-md transition-all duration-200 group"
+            className="bg-white border border-gray-200 rounded p-5 text-left hover:border-gray-400 hover:shadow-md transition-all duration-200 group"
           >
             <div className="flex items-start justify-between mb-4">
-              <div className="w-10 h-10 bg-[hsl(220,45%,18%)] flex items-center justify-center">
-                <Icon name={cat.icon} fallback="FileText" size={18} className="text-[hsl(38,60%,60%)]" />
+              <div className="w-10 h-10 flex items-center justify-center rounded text-white"
+                style={{ backgroundColor: BRAND.navy }}>
+                <Icon name={cat.icon} fallback="FileText" size={18} />
               </div>
-              <span className="font-body text-xs text-muted-foreground bg-[hsl(216,20%,93%)] px-2 py-1">
-                {cat.count} докум.
-              </span>
+              <span className="text-xs text-gray-400 bg-gray-100 px-2 py-0.5 rounded">{cat.count} докум.</span>
             </div>
-            <h3 className="font-display text-lg font-semibold text-[hsl(220,45%,18%)] leading-snug mb-2 group-hover:text-[hsl(220,45%,30%)]">
+            <h3 className="font-semibold text-sm leading-snug mb-2 group-hover:underline"
+              style={{ color: BRAND.navy }}>
               {cat.title}
             </h3>
-            <p className="font-body text-xs text-muted-foreground leading-relaxed">{cat.description}</p>
-            <div className="flex items-center gap-1 mt-4 text-[hsl(38,60%,48%)]">
-              <span className="font-body text-xs font-medium">Открыть раздел</span>
-              <Icon name="ArrowRight" size={12} />
+            <p className="text-xs text-gray-500 leading-relaxed">{cat.description}</p>
+            <div className="flex items-center gap-1 mt-4 text-sm font-medium" style={{ color: BRAND.red }}>
+              <span>Открыть</span>
+              <Icon name="ArrowRight" size={13} />
             </div>
           </button>
         ))}
@@ -471,49 +497,61 @@ function DocumentsSection({
   );
 }
 
-/* ───── CALENDAR ───── */
+/* ─────────────────────────────── */
+/* ── КАЛЕНДАРЬ ── */
+/* ─────────────────────────────── */
 function CalendarSection() {
-  const typeLabels: Record<string, { label: string; color: string }> = {
-    meeting: { label: "Заседание РГ", color: "bg-[hsl(220,45%,18%)] text-white" },
-    event: { label: "Мероприятие", color: "bg-[hsl(38,60%,48%)] text-white" },
-    plenary: { label: "Пленарное", color: "bg-[hsl(0,60%,45%)] text-white" },
+  const typeStyle: Record<string, { label: string; bg: string; text: string }> = {
+    meeting: { label: "Заседание РГ", bg: BRAND.navy, text: "#fff" },
+    event: { label: "Мероприятие", bg: BRAND.red, text: "#fff" },
+    plenary: { label: "Пленарное", bg: "#6B7280", text: "#fff" },
   };
 
   return (
     <div className="animate-slide-up">
-      <div className="border-l-4 border-[hsl(38,60%,48%)] pl-6 mb-10">
-        <h2 className="font-display text-4xl font-semibold text-[hsl(220,45%,18%)]">Календарь событий</h2>
-        <p className="font-body text-muted-foreground mt-2 text-sm">Заседания рабочих групп и мероприятия Совета</p>
-      </div>
+      <SectionHeader title="Календарь событий" subtitle="Заседания рабочих групп и мероприятия Совета" />
 
-      <div className="flex flex-wrap gap-3 mb-8">
-        {Object.entries(typeLabels).map(([key, val]) => (
-          <span key={key} className={`font-body text-xs px-2 py-1 ${val.color}`}>{val.label}</span>
+      {/* Легенда */}
+      <div className="flex flex-wrap gap-2 mb-6">
+        {Object.values(typeStyle).map((t) => (
+          <span key={t.label} className="text-xs font-medium px-3 py-1 rounded"
+            style={{ backgroundColor: t.bg, color: t.text }}>
+            {t.label}
+          </span>
         ))}
       </div>
 
-      <div className="space-y-3">
+      <div className="space-y-2">
         {EVENTS.map((event, idx) => {
-          const meta = typeLabels[event.type];
+          const meta = typeStyle[event.type];
           return (
-            <div key={idx} className="bg-white border border-border flex items-stretch hover:shadow-md hover:border-[hsl(220,45%,35%)] transition-all duration-200">
-              <div className="w-20 bg-[hsl(216,28%,97%)] border-r border-border flex flex-col items-center justify-center py-4 flex-shrink-0">
-                <span className="font-display text-2xl font-semibold text-[hsl(220,45%,18%)]">{event.date}</span>
-                <span className="font-body text-xs text-muted-foreground uppercase">{event.month}</span>
+            <div key={idx}
+              className="bg-white border border-gray-200 rounded flex items-stretch hover:shadow-md hover:border-gray-400 transition-all duration-200">
+              {/* Дата */}
+              <div className="w-20 flex flex-col items-center justify-center py-4 flex-shrink-0 border-r border-gray-100"
+                style={{ backgroundColor: "#EFF2FB" }}>
+                <span className="text-2xl font-bold leading-none" style={{ color: BRAND.navy }}>{event.date}</span>
+                <span className="text-xs text-gray-500 uppercase mt-0.5">{event.month}</span>
               </div>
+              {/* Контент */}
               <div className="flex-1 p-4">
                 <div className="flex items-start justify-between gap-3 mb-2">
-                  <h3 className="font-body font-medium text-sm text-[hsl(220,45%,18%)] leading-snug">{event.title}</h3>
-                  <span className={`font-body text-xs px-2 py-0.5 flex-shrink-0 ${meta.color}`}>{meta.label}</span>
+                  <h3 className="font-medium text-sm leading-snug" style={{ color: BRAND.navy }}>
+                    {event.title}
+                  </h3>
+                  <span className="text-xs font-medium px-2 py-0.5 rounded flex-shrink-0 whitespace-nowrap"
+                    style={{ backgroundColor: meta.bg, color: meta.text }}>
+                    {meta.label}
+                  </span>
                 </div>
                 <div className="flex items-center gap-4">
                   <div className="flex items-center gap-1.5">
-                    <Icon name="Clock" size={13} className="text-muted-foreground" />
-                    <span className="font-body text-xs text-muted-foreground">{event.time}</span>
+                    <Icon name="Clock" size={13} className="text-gray-400" />
+                    <span className="text-xs text-gray-500">{event.time}</span>
                   </div>
                   <div className="flex items-center gap-1.5">
-                    <Icon name="MapPin" size={13} className="text-muted-foreground" />
-                    <span className="font-body text-xs text-muted-foreground">{event.location}</span>
+                    <Icon name="MapPin" size={13} className="text-gray-400" />
+                    <span className="text-xs text-gray-500">{event.location}</span>
                   </div>
                 </div>
               </div>
@@ -522,11 +560,11 @@ function CalendarSection() {
         })}
       </div>
 
-      <div className="mt-8 border border-border bg-white p-5 flex items-start gap-4">
-        <Icon name="Bell" size={18} className="text-[hsl(38,60%,48%)] flex-shrink-0 mt-0.5" />
+      <div className="mt-6 bg-white border border-gray-200 rounded p-5 flex items-start gap-4">
+        <Icon name="Bell" size={18} className="flex-shrink-0 mt-0.5" style={{ color: BRAND.red }} />
         <div>
-          <p className="font-body font-medium text-sm text-foreground mb-1">Получить уведомления</p>
-          <p className="font-body text-sm text-muted-foreground">
+          <p className="font-semibold text-sm mb-1" style={{ color: BRAND.navy }}>Получить уведомления</p>
+          <p className="text-sm text-gray-500">
             Чтобы получать напоминания о предстоящих заседаниях, обратитесь к секретарю Совета.
           </p>
         </div>
@@ -535,63 +573,66 @@ function CalendarSection() {
   );
 }
 
-/* ───── CONTACTS ───── */
+/* ─────────────────────────────── */
+/* ── КОНТАКТЫ ── */
+/* ─────────────────────────────── */
 function ContactsSection() {
   return (
     <div className="animate-slide-up">
-      <div className="border-l-4 border-[hsl(38,60%,48%)] pl-6 mb-10">
-        <h2 className="font-display text-4xl font-semibold text-[hsl(220,45%,18%)]">Контакты</h2>
-        <p className="font-body text-muted-foreground mt-2 text-sm">Свяжитесь с нами по любым вопросам деятельности Совета</p>
-      </div>
+      <SectionHeader title="Контакты" subtitle="Свяжитесь с нами по любым вопросам деятельности Совета" />
 
       <div className="grid md:grid-cols-2 gap-8">
-        <div className="space-y-6">
+        <div className="space-y-5">
           {[
             { icon: "MapPin", label: "Адрес", value: "г. Москва, ул. Примерная, д. 1, оф. 101" },
             { icon: "Phone", label: "Телефон", value: "+7 (495) 000-00-00" },
             { icon: "Mail", label: "Электронная почта", value: "info@council-psychiatry.ru" },
+            { icon: "Globe", label: "Основной сайт", value: "mental-health-russia.ru" },
             { icon: "Clock", label: "Часы работы", value: "Пн–Пт: 09:00 – 18:00" },
           ].map((item) => (
             <div key={item.label} className="flex items-start gap-4">
-              <div className="w-10 h-10 bg-[hsl(220,45%,18%)] flex items-center justify-center flex-shrink-0">
-                <Icon name={item.icon} fallback="MapPin" size={16} className="text-[hsl(38,60%,60%)]" />
+              <div className="w-10 h-10 flex items-center justify-center rounded flex-shrink-0 text-white"
+                style={{ backgroundColor: BRAND.navy }}>
+                <Icon name={item.icon} fallback="MapPin" size={16} />
               </div>
               <div>
-                <p className="font-body text-xs text-muted-foreground uppercase tracking-wide mb-1">{item.label}</p>
-                <p className="font-body text-sm font-medium text-foreground">{item.value}</p>
+                <p className="text-xs text-gray-400 uppercase tracking-wide mb-0.5">{item.label}</p>
+                <p className="text-sm font-medium text-gray-800">{item.value}</p>
               </div>
             </div>
           ))}
         </div>
 
-        <div className="bg-white border border-border p-6">
-          <h3 className="font-display text-xl font-semibold text-[hsl(220,45%,18%)] mb-5">Написать сообщение</h3>
+        <div className="bg-white border border-gray-200 rounded p-6">
+          <h3 className="font-bold text-base mb-5" style={{ color: BRAND.navy }}>Написать обращение</h3>
           <div className="space-y-4">
+            {[
+              { label: "Ваше имя", type: "text", placeholder: "Иванов Иван Иванович" },
+              { label: "Email", type: "email", placeholder: "example@mail.ru" },
+            ].map((field) => (
+              <div key={field.label}>
+                <label className="block text-xs text-gray-500 mb-1.5 uppercase tracking-wide">{field.label}</label>
+                <input
+                  type={field.type}
+                  placeholder={field.placeholder}
+                  className="w-full border border-gray-200 bg-gray-50 rounded px-3 py-2.5 text-sm focus:outline-none focus:border-blue-900 transition-colors"
+                />
+              </div>
+            ))}
             <div>
-              <label className="font-body text-xs text-muted-foreground uppercase tracking-wide block mb-1.5">Ваше имя</label>
-              <input
-                type="text"
-                className="w-full border border-border bg-[hsl(216,28%,97%)] px-3 py-2.5 font-body text-sm focus:outline-none focus:border-[hsl(220,45%,35%)] transition-colors"
-                placeholder="Иванов Иван Иванович"
-              />
-            </div>
-            <div>
-              <label className="font-body text-xs text-muted-foreground uppercase tracking-wide block mb-1.5">Email</label>
-              <input
-                type="email"
-                className="w-full border border-border bg-[hsl(216,28%,97%)] px-3 py-2.5 font-body text-sm focus:outline-none focus:border-[hsl(220,45%,35%)] transition-colors"
-                placeholder="example@mail.ru"
-              />
-            </div>
-            <div>
-              <label className="font-body text-xs text-muted-foreground uppercase tracking-wide block mb-1.5">Сообщение</label>
+              <label className="block text-xs text-gray-500 mb-1.5 uppercase tracking-wide">Сообщение</label>
               <textarea
                 rows={4}
-                className="w-full border border-border bg-[hsl(216,28%,97%)] px-3 py-2.5 font-body text-sm focus:outline-none focus:border-[hsl(220,45%,35%)] transition-colors resize-none"
                 placeholder="Текст вашего обращения..."
+                className="w-full border border-gray-200 bg-gray-50 rounded px-3 py-2.5 text-sm focus:outline-none focus:border-blue-900 transition-colors resize-none"
               />
             </div>
-            <button className="w-full bg-[hsl(220,45%,18%)] text-white font-body text-sm py-3 hover:bg-[hsl(220,45%,25%)] transition-colors duration-200">
+            <button
+              className="w-full text-white text-sm font-semibold py-3 rounded transition-colors duration-200"
+              style={{ backgroundColor: BRAND.navy }}
+              onMouseEnter={(e) => (e.currentTarget.style.backgroundColor = BRAND.navyLight)}
+              onMouseLeave={(e) => (e.currentTarget.style.backgroundColor = BRAND.navy)}
+            >
               Отправить обращение
             </button>
           </div>

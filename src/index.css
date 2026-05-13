@@ -4,33 +4,35 @@
 
 @layer base {
   :root {
-    --background: 216 28% 97%;
-    --foreground: 220 40% 10%;
+    --background: 0 0% 96%;
+    --foreground: 228 37% 18%;
 
     --card: 0 0% 100%;
-    --card-foreground: 220 40% 10%;
+    --card-foreground: 228 37% 18%;
 
     --popover: 0 0% 100%;
-    --popover-foreground: 220 40% 10%;
+    --popover-foreground: 228 37% 18%;
 
-    --primary: 220 45% 18%;
-    --primary-foreground: 210 40% 98%;
+    /* Тёмно-синий #2D3561 из логотипа СОПЗ */
+    --primary: 228 37% 28%;
+    --primary-foreground: 0 0% 100%;
 
-    --secondary: 216 20% 92%;
-    --secondary-foreground: 220 40% 18%;
+    --secondary: 225 20% 93%;
+    --secondary-foreground: 228 37% 28%;
 
-    --muted: 216 20% 93%;
-    --muted-foreground: 220 15% 46%;
+    --muted: 220 15% 94%;
+    --muted-foreground: 220 10% 48%;
 
-    --accent: 38 60% 48%;
+    /* Красный #C0392B из логотипа СОПЗ */
+    --accent: 4 63% 47%;
     --accent-foreground: 0 0% 100%;
 
     --destructive: 0 84.2% 60.2%;
     --destructive-foreground: 210 40% 98%;
 
-    --border: 216 20% 85%;
-    --input: 216 20% 85%;
-    --ring: 220 45% 18%;
+    --border: 220 15% 87%;
+    --input: 220 15% 87%;
+    --ring: 228 37% 28%;
 
     --radius: 0.25rem;
 
@@ -52,7 +54,7 @@
 
   body {
     @apply bg-background text-foreground;
-    font-family: "IBM Plex Sans", sans-serif;
+    font-family: "Inter", sans-serif;
   }
 
   h1,
@@ -61,24 +63,17 @@
   h4,
   h5,
   h6 {
-    font-family: "Cormorant", serif;
+    font-family: "Inter", sans-serif;
   }
 }
 
 @layer utilities {
-  .font-display {
-    font-family: "Cormorant", serif;
-  }
-  .font-body {
-    font-family: "IBM Plex Sans", sans-serif;
-  }
-
   .animate-fade-in {
-    animation: fadeIn 0.5s ease forwards;
+    animation: fadeIn 0.4s ease forwards;
   }
 
   .animate-slide-up {
-    animation: slideUp 0.5s ease forwards;
+    animation: slideUp 0.4s ease forwards;
   }
 
   @keyframes fadeIn {
@@ -93,7 +88,7 @@
   @keyframes slideUp {
     from {
       opacity: 0;
-      transform: translateY(20px);
+      transform: translateY(16px);
     }
     to {
       opacity: 1;
@@ -101,28 +96,7 @@
     }
   }
 
-  .nav-link {
-    position: relative;
-    padding-bottom: 2px;
-  }
-
-  .nav-link::after {
-    content: "";
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    width: 0;
-    height: 1px;
-    background-color: hsl(38 60% 48%);
-    transition: width 0.3s ease;
-  }
-
-  .nav-link:hover::after,
-  .nav-link.active::after {
-    width: 100%;
-  }
-
   .section-divider {
-    border-top: 1px solid hsl(216 20% 85%);
+    border-top: 1px solid hsl(220 15% 87%);
   }
 }
