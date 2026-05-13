@@ -46,7 +46,6 @@ const EVENTS = [
 ];
 
 const ORG_COMMITTEE = [
-  { name: "Осадший Юрий Юрьевич", role: "Председатель. Врач психиатр, психотерапевт", region: "Председатель" },
   { name: "Шпицберг Игорь Леонидович", role: "Руководитель Центра реабилитации инвалидов детства «Наш Солнечный Мир», член Правления Международной ассоциации Autism Europe, член Совета МГАРДИ, член Экспертного совета Министерства просвещения РФ по вопросам сопровождения детей с РАС", region: "Москва" },
   { name: "Толмачев Владимир Алексеевич", role: "Председатель Нижегородского регионального отделения ОООИ «Новые возможности»", region: "Н. Новгород" },
   { name: "Толпекина Наталья Викторовна", role: "Президент Благотворительного Фонда помощи детям, больным ДЦП и иными тяжелыми заболеваниями «Божья коровка»", region: "Орёл" },
@@ -381,18 +380,14 @@ function AboutSection() {
           <div className="p-8">
             <div className="flex items-start gap-6">
               <div className="w-20 h-20 rounded-2xl flex items-center justify-center text-white text-2xl font-bold flex-shrink-0"
-                style={{ background: `linear-gradient(135deg, ${BRAND.navy}, ${BRAND.navyLight})` }}>
-                НТ
+                style={{ background: `linear-gradient(135deg, ${BRAND.red}, ${BRAND.redLight})` }}>
+                ОЮ
               </div>
               <div>
-                <h3 className="text-xl font-bold" style={{ color: BRAND.navyDark }}>Треушникова Наталья Валерьевна</h3>
+                <h3 className="text-xl font-bold" style={{ color: BRAND.navyDark }}>Осадший Юрий Юрьевич</h3>
                 <Pill red className="mt-2">Председатель Совета НКО при РОП</Pill>
-                <p className="text-sm text-gray-500 mt-1">Президент Союза охраны психического здоровья</p>
+                <p className="text-sm text-gray-500 mt-1">Врач психиатр, психотерапевт</p>
               </div>
-            </div>
-            <div className="mt-6 pt-6 border-t border-gray-100 space-y-3 text-[15px] leading-relaxed text-gray-600">
-              <p>Наталья Валерьевна Треушникова — общественный деятель, президент Союза охраны психического здоровья, инициатор создания Совета НКО при Российском обществе психиатров.</p>
-              <p>Под её руководством Союз объединил более 85 региональных организаций, занимающихся реабилитацией и поддержкой людей с психическими расстройствами. Активно взаимодействует с органами государственной власти, профессиональным психиатрическим сообществом и СМИ.</p>
             </div>
           </div>
         </Card>
