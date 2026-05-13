@@ -91,9 +91,9 @@ export default function Index() {
 
             {/* Логотип Совета НКО — слева */}
             <img
-              src="https://cdn.poehali.dev/projects/64a22a44-84da-402b-b52f-cd0f436152dc/bucket/bcaa3365-e019-4fe8-831f-e211788eb9a7.png"
+              src="https://cdn.poehali.dev/projects/64a22a44-84da-402b-b52f-cd0f436152dc/bucket/d316c79e-d618-4023-8158-b08553c4ecdc.png"
               alt="Совет НКО при РОП"
-              className="h-16 w-auto flex-shrink-0"
+              className="h-16 w-16 object-contain flex-shrink-0"
             />
 
             {/* Навигация — по центру */}
