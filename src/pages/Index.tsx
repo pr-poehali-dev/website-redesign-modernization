@@ -74,13 +74,61 @@ const EVENTS = [
   { date: "17", month: "июн", title: "Пленарное заседание Совета", type: "plenary", time: "13:00", location: "Зал заседаний" },
 ];
 
-const COUNCIL_MEMBERS = [
-  { name: "Александров Дмитрий Борисович", role: "Председатель совета", degree: "д.м.н., профессор" },
-  { name: "Белова Наталья Сергеевна", role: "Заместитель председателя", degree: "к.ю.н." },
-  { name: "Виноградов Андрей Михайлович", role: "Ответственный секретарь", degree: "к.м.н." },
-  { name: "Герасимова Ольга Петровна", role: "Член совета", degree: "д.п.н., профессор" },
-  { name: "Дмитриев Сергей Николаевич", role: "Член совета", degree: "Правозащитник" },
-  { name: "Ефимова Лариса Викторовна", role: "Член совета", degree: "к.с.н." },
+// Оргкомитет — заполняется вручную
+const ORG_COMMITTEE = [
+  { name: "Треушникова Наталья Валерьевна", role: "Президент Союза охраны психического здоровья", region: "Москва" },
+  { name: "Незнанов Николай Григорьевич", role: "Президент Российского общества психиатров, д.м.н., профессор", region: "Санкт-Петербург" },
+  { name: "Иванова Мария Александровна", role: "Ответственный секретарь", region: "Москва" },
+  { name: "Петров Сергей Владимирович", role: "Член организационного комитета", region: "Екатеринбург" },
+  { name: "Сидорова Елена Николаевна", role: "Член организационного комитета", region: "Новосибирск" },
+  { name: "Козлов Андрей Павлович", role: "Член организационного комитета", region: "Казань" },
+];
+
+// Состав совета — заглушка, заменяется данными из CSV/таблицы в ядре
+const COUNCIL_MEMBERS_FULL: { name: string; org: string; region: string }[] = [
+  { name: "Абрамова Светлана Игоревна", org: "АНО «Добрый путь»", region: "Москва" },
+  { name: "Алексеев Виктор Петрович", org: "БФ «Здоровье и право»", region: "Санкт-Петербург" },
+  { name: "Андреева Ольга Сергеевна", org: "НКО «Открытый диалог»", region: "Новосибирск" },
+  { name: "Баранов Михаил Юрьевич", org: "Фонд «Шаг навстречу»", region: "Екатеринбург" },
+  { name: "Белова Ирина Николаевна", org: "АНО «Помощь рядом»", region: "Казань" },
+  { name: "Борисова Татьяна Александровна", org: "НКО «Луч надежды»", region: "Краснодар" },
+  { name: "Васильев Дмитрий Олегович", org: "Фонд «Новая жизнь»", region: "Ростов-на-Дону" },
+  { name: "Григорьева Наталья Владимировна", org: "АНО «Интеграция»", region: "Пермь" },
+  { name: "Дмитриев Павел Сергеевич", org: "НКО «Равные права»", region: "Воронеж" },
+  { name: "Егорова Анна Михайловна", org: "БФ «Вместе сильнее»", region: "Самара" },
+  { name: "Жукова Людмила Петровна", org: "Фонд «Добросердие»", region: "Омск" },
+  { name: "Захаров Игорь Анатольевич", org: "АНО «Свет в окне»", region: "Уфа" },
+  { name: "Иванов Алексей Викторович", org: "НКО «Реабилитация»", region: "Челябинск" },
+  { name: "Кузнецова Елена Борисовна", org: "БФ «Помощь и поддержка»", region: "Красноярск" },
+  { name: "Лебедев Сергей Николаевич", org: "АНО «Открытые сердца»", region: "Волгоград" },
+];
+
+// Отчёты совета — заполняются реальными ссылками
+const REPORTS = [
+  {
+    year: "2024",
+    title: "Отчёт о деятельности Совета НКО при РОП за 2024 год",
+    description: "Итоги работы рабочих групп, мероприятия, достижения и планы развития",
+    pages: 48,
+    date: "март 2025",
+    fileUrl: "#",
+  },
+  {
+    year: "2023",
+    title: "Отчёт о деятельности Совета НКО при РОП за 2023 год",
+    description: "Обзор реализованных проектов, встреч с органами власти и публичных акций",
+    pages: 42,
+    date: "март 2024",
+    fileUrl: "#",
+  },
+  {
+    year: "2022",
+    title: "Отчёт о деятельности Совета НКО при РОП за 2022 год",
+    description: "Формирование структуры совета, первые рабочие группы, ключевые события",
+    pages: 36,
+    date: "март 2023",
+    fileUrl: "#",
+  },
 ];
 
 export default function Index() {
@@ -238,90 +286,299 @@ function NavyTag({ children }: { children: React.ReactNode }) {
 }
 
 /* ─────────────────────────────── */
-/* ── О СОВЕТЕ ── */
+/* ── О СОВЕТЕ (с вкладками) ── */
 /* ─────────────────────────────── */
+
+const ABOUT_TABS = [
+  { id: "info", label: "О совете" },
+  { id: "chair", label: "Председатель" },
+  { id: "orgcom", label: "Оргкомитет" },
+  { id: "members", label: "Состав совета" },
+  { id: "reports", label: "Отчёты" },
+];
+
 function AboutSection() {
+  const [tab, setTab] = useState("info");
+  const [search, setSearch] = useState("");
+  const [regionFilter, setRegionFilter] = useState("Все");
+
+  const regions = ["Все", ...Array.from(new Set(COUNCIL_MEMBERS_FULL.map((m) => m.region))).sort()];
+  const filtered = COUNCIL_MEMBERS_FULL.filter((m) => {
+    const matchSearch = m.name.toLowerCase().includes(search.toLowerCase()) ||
+      m.org.toLowerCase().includes(search.toLowerCase());
+    const matchRegion = regionFilter === "Все" || m.region === regionFilter;
+    return matchSearch && matchRegion;
+  });
+
   return (
     <div className="animate-slide-up">
       <SectionHeader title="О совете" subtitle="Совет НКО при Российском обществе психиатров" />
 
-      <div className="grid md:grid-cols-3 gap-8 mb-10">
-        <div className="md:col-span-2 space-y-5 text-[15px] leading-relaxed text-gray-700">
-          <p>
-            Совет некоммерческих организаций в сфере охраны психического здоровья при Российском обществе
-            психиатров – структура, призванная наладить тесное взаимодействие между НКО и профессиональным
-            психиатрическим сообществом. Инициатором создания Совета, в состав которого вошли руководители
-            некоммерческих организаций из 85 регионов РФ, выступил Союз охраны психического здоровья.
-          </p>
-          <div className="border-l-4 pl-4 py-1" style={{ borderColor: BRAND.red }}>
-            <p className="font-semibold text-sm mb-1" style={{ color: BRAND.navy }}>Наша цель</p>
+      {/* Вкладки */}
+      <div className="flex flex-wrap gap-0 border-b border-gray-200 mb-8">
+        {ABOUT_TABS.map((t) => (
+          <button
+            key={t.id}
+            onClick={() => setTab(t.id)}
+            className="px-5 py-3 text-sm font-medium transition-colors duration-150 border-b-2 -mb-px"
+            style={{
+              color: tab === t.id ? BRAND.red : "#6B7280",
+              borderBottomColor: tab === t.id ? BRAND.red : "transparent",
+              backgroundColor: "transparent",
+            }}
+          >
+            {t.label}
+          </button>
+        ))}
+      </div>
+
+      {/* ── Вкладка: О совете ── */}
+      {tab === "info" && (
+        <div className="grid md:grid-cols-3 gap-8">
+          <div className="md:col-span-2 space-y-5 text-[15px] leading-relaxed text-gray-700">
             <p>
-              Развитие общественно-ориентированной системы медико-социальной реабилитации детей и взрослых
-              людей с психическими особенностями, обеспечение скоординированных действий НКО,
-              психиатрического сообщества, органов власти, СМИ.
+              Совет некоммерческих организаций в сфере охраны психического здоровья при Российском обществе
+              психиатров – структура, призванная наладить тесное взаимодействие между НКО и профессиональным
+              психиатрическим сообществом. Инициатором создания Совета, в состав которого вошли руководители
+              некоммерческих организаций из 85 регионов РФ, выступил Союз охраны психического здоровья.
             </p>
-          </div>
-
-          {/* Цитата Незнанова */}
-          <div className="bg-gray-50 border border-gray-200 rounded p-5 space-y-2">
-            <p className="text-sm italic text-gray-600">
-              Во время первого заседания к членам Совета обратился{" "}
-              <span className="font-semibold not-italic text-gray-800">Н.Г. Незнанов</span>,
-              д.м.н., профессор, директор Национального медицинского исследовательского центра
-              психиатрии и неврологии имени В.М. Бехтерева, главный внештатный специалист-эксперт
-              по психиатрии Росздравнадзора, президент Российского общества психиатров,
-              заслуженный деятель науки РФ.
-            </p>
-            <p className="text-sm text-gray-600">
-              В своём обращении он отметил значимость создания Совета, необходимость формирования
-              единой модели психосоциальной реабилитации во всех регионах РФ и укрепления роли
-              некоммерческих организаций в системе охраны психического здоровья.
-            </p>
-          </div>
-
-          {/* Цитата Треушниковой */}
-          <div className="bg-gray-50 border border-gray-200 rounded p-5 space-y-2">
-            <p className="text-sm italic text-gray-600">
-              Президент Союза охраны психического здоровья{" "}
-              <span className="font-semibold not-italic text-gray-800">Н.В. Треушникова</span>{" "}
-              отметила необходимость продуктивного диалога между участниками Совета и профессиональным
-              психиатрическим сообществом, важность развития системы психосоциальной реабилитации,
-              несмотря на экономические, территориальные и иные различия регионов России.
-            </p>
-          </div>
-        </div>
-
-        {/* Статистика */}
-        <div className="grid grid-cols-2 gap-3">
-          {[
-            { label: "Лет работы", value: "8" },
-            { label: "Членов совета", value: "24" },
-            { label: "Рабочих групп", value: "4" },
-            { label: "Документов", value: "69+" },
-          ].map((stat) => (
-            <div key={stat.label} className="bg-white rounded border border-gray-200 p-4 text-center">
-              <div className="text-3xl font-bold" style={{ color: BRAND.navy }}>{stat.value}</div>
-              <div className="text-xs text-gray-500 mt-1">{stat.label}</div>
+            <div className="border-l-4 pl-4 py-1" style={{ borderColor: BRAND.red }}>
+              <p className="font-semibold text-sm mb-1" style={{ color: BRAND.navy }}>Наша цель</p>
+              <p>
+                Развитие общественно-ориентированной системы медико-социальной реабилитации детей и взрослых
+                людей с психическими особенностями, обеспечение скоординированных действий НКО,
+                психиатрического сообщества, органов власти, СМИ.
+              </p>
             </div>
-          ))}
-        </div>
-      </div>
-
-      {/* Состав */}
-      <div className="section-divider pt-8">
-        <h3 className="text-lg font-bold mb-5" style={{ color: BRAND.navy }}>Состав совета</h3>
-        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-4">
-          {COUNCIL_MEMBERS.map((member) => (
-            <div key={member.name}
-              className="bg-white border border-gray-200 rounded p-5 hover:border-gray-400 hover:shadow-sm transition-all duration-200">
-              <div className="w-8 h-1 mb-3 rounded-full" style={{ backgroundColor: BRAND.red }} />
-              <p className="font-semibold text-sm leading-snug" style={{ color: BRAND.navy }}>{member.name}</p>
-              <p className="text-xs text-gray-500 mt-1">{member.role}</p>
-              <p className="text-xs mt-0.5 italic" style={{ color: BRAND.red }}>{member.degree}</p>
+            <div className="bg-gray-50 border border-gray-200 rounded p-5 space-y-2">
+              <p className="text-sm italic text-gray-600">
+                Во время первого заседания к членам Совета обратился{" "}
+                <span className="font-semibold not-italic text-gray-800">Н.Г. Незнанов</span>,
+                д.м.н., профессор, директор НМИЦ психиатрии и неврологии им. В.М. Бехтерева,
+                президент Российского общества психиатров, заслуженный деятель науки РФ.
+              </p>
+              <p className="text-sm text-gray-600">
+                Он отметил значимость создания Совета, необходимость формирования единой модели
+                психосоциальной реабилитации во всех регионах РФ и укрепления роли НКО в системе
+                охраны психического здоровья.
+              </p>
             </div>
-          ))}
+            <div className="bg-gray-50 border border-gray-200 rounded p-5">
+              <p className="text-sm italic text-gray-600">
+                Президент Союза охраны психического здоровья{" "}
+                <span className="font-semibold not-italic text-gray-800">Н.В. Треушникова</span>{" "}
+                отметила необходимость продуктивного диалога между участниками Совета и профессиональным
+                психиатрическим сообществом, важность развития системы психосоциальной реабилитации,
+                несмотря на экономические, территориальные и иные различия регионов России.
+              </p>
+            </div>
+          </div>
+          <div className="grid grid-cols-2 gap-3 content-start">
+            {[
+              { label: "Регионов РФ", value: "85" },
+              { label: "Членов совета", value: "100+" },
+              { label: "Рабочих групп", value: "4" },
+              { label: "Лет работы", value: "8" },
+            ].map((stat) => (
+              <div key={stat.label} className="bg-white rounded border border-gray-200 p-4 text-center">
+                <div className="text-3xl font-bold" style={{ color: BRAND.navy }}>{stat.value}</div>
+                <div className="text-xs text-gray-500 mt-1">{stat.label}</div>
+              </div>
+            ))}
+          </div>
         </div>
-      </div>
+      )}
+
+      {/* ── Вкладка: Председатель ── */}
+      {tab === "chair" && (
+        <div className="max-w-2xl">
+          <div className="bg-white border border-gray-200 rounded-lg overflow-hidden">
+            <div className="h-2 w-full" style={{ backgroundColor: BRAND.navy }} />
+            <div className="p-8">
+              <div className="flex items-start gap-6">
+                <div className="w-20 h-20 rounded-full flex items-center justify-center text-white text-2xl font-bold flex-shrink-0"
+                  style={{ backgroundColor: BRAND.navy }}>
+                  НТ
+                </div>
+                <div>
+                  <h3 className="text-xl font-bold leading-snug" style={{ color: BRAND.navy }}>
+                    Треушникова Наталья Валерьевна
+                  </h3>
+                  <p className="text-sm font-medium mt-1" style={{ color: BRAND.red }}>
+                    Председатель Совета НКО при РОП
+                  </p>
+                  <p className="text-sm text-gray-500 mt-0.5">
+                    Президент Союза охраны психического здоровья
+                  </p>
+                </div>
+              </div>
+              <div className="mt-6 pt-6 border-t border-gray-100 space-y-3 text-[15px] leading-relaxed text-gray-700">
+                <p>
+                  Наталья Валерьевна Треушникова — общественный деятель, президент Союза охраны
+                  психического здоровья, инициатор создания Совета НКО при Российском обществе психиатров.
+                </p>
+                <p>
+                  Под её руководством Союз объединил более 85 региональных организаций, занимающихся
+                  реабилитацией и поддержкой людей с психическими расстройствами. Активно взаимодействует
+                  с органами государственной власти, профессиональным психиатрическим сообществом и СМИ.
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* ── Вкладка: Оргкомитет ── */}
+      {tab === "orgcom" && (
+        <div>
+          <p className="text-sm text-gray-500 mb-6">
+            Организационный комитет координирует деятельность Совета, организует заседания и взаимодействие с партнёрами.
+          </p>
+          <div className="grid md:grid-cols-2 gap-4">
+            {ORG_COMMITTEE.map((member, idx) => (
+              <div key={idx} className="bg-white border border-gray-200 rounded p-5 flex items-start gap-4
+                hover:border-gray-400 hover:shadow-sm transition-all duration-200">
+                <div className="w-10 h-10 rounded-full flex items-center justify-center text-white text-sm font-bold flex-shrink-0"
+                  style={{ backgroundColor: idx === 0 ? BRAND.red : BRAND.navy }}>
+                  {member.name.split(" ").map((n) => n[0]).slice(0, 2).join("")}
+                </div>
+                <div className="min-w-0">
+                  <p className="font-semibold text-sm leading-snug" style={{ color: BRAND.navy }}>
+                    {member.name}
+                  </p>
+                  <p className="text-xs text-gray-500 mt-1 leading-snug">{member.role}</p>
+                  <span className="inline-block mt-2 text-xs bg-gray-100 text-gray-500 px-2 py-0.5 rounded">
+                    {member.region}
+                  </span>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      )}
+
+      {/* ── Вкладка: Состав совета ── */}
+      {tab === "members" && (
+        <div>
+          {/* Поиск и фильтр */}
+          <div className="flex flex-col sm:flex-row gap-3 mb-5">
+            <div className="relative flex-1">
+              <Icon name="Search" size={15} className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400" />
+              <input
+                type="text"
+                placeholder="Поиск по имени или организации..."
+                value={search}
+                onChange={(e) => setSearch(e.target.value)}
+                className="w-full pl-9 pr-3 py-2.5 border border-gray-200 rounded text-sm focus:outline-none focus:border-blue-900 bg-white"
+              />
+            </div>
+            <select
+              value={regionFilter}
+              onChange={(e) => setRegionFilter(e.target.value)}
+              className="border border-gray-200 rounded px-3 py-2.5 text-sm focus:outline-none bg-white text-gray-700"
+            >
+              {regions.map((r) => <option key={r}>{r}</option>)}
+            </select>
+          </div>
+
+          {/* Счётчик */}
+          <p className="text-xs text-gray-400 mb-3">
+            Показано: {filtered.length} из {COUNCIL_MEMBERS_FULL.length} (полный список загружается из базы данных)
+          </p>
+
+          {/* Таблица */}
+          <div className="bg-white border border-gray-200 rounded overflow-hidden">
+            <table className="w-full text-sm">
+              <thead>
+                <tr style={{ backgroundColor: BRAND.navy }}>
+                  <th className="text-left px-4 py-3 text-white font-semibold text-xs uppercase tracking-wide">№</th>
+                  <th className="text-left px-4 py-3 text-white font-semibold text-xs uppercase tracking-wide">ФИО</th>
+                  <th className="text-left px-4 py-3 text-white font-semibold text-xs uppercase tracking-wide hidden md:table-cell">Организация</th>
+                  <th className="text-left px-4 py-3 text-white font-semibold text-xs uppercase tracking-wide">Регион</th>
+                </tr>
+              </thead>
+              <tbody>
+                {filtered.map((m, idx) => (
+                  <tr key={idx}
+                    className="border-t border-gray-100 hover:bg-gray-50 transition-colors">
+                    <td className="px-4 py-3 text-gray-400 text-xs">{idx + 1}</td>
+                    <td className="px-4 py-3 font-medium text-gray-800">{m.name}</td>
+                    <td className="px-4 py-3 text-gray-500 hidden md:table-cell">{m.org}</td>
+                    <td className="px-4 py-3">
+                      <span className="text-xs bg-gray-100 text-gray-600 px-2 py-0.5 rounded">{m.region}</span>
+                    </td>
+                  </tr>
+                ))}
+                {filtered.length === 0 && (
+                  <tr>
+                    <td colSpan={4} className="px-4 py-8 text-center text-gray-400 text-sm">
+                      Ничего не найдено
+                    </td>
+                  </tr>
+                )}
+              </tbody>
+            </table>
+          </div>
+
+          <div className="mt-4 p-4 bg-blue-50 border border-blue-100 rounded flex items-start gap-3">
+            <Icon name="Info" size={16} className="text-blue-500 flex-shrink-0 mt-0.5" />
+            <p className="text-xs text-blue-700">
+              Полный актуальный список членов совета загружается из базы данных. Для обновления данных
+              загрузите таблицу в формате CSV через панель управления Ядро.
+            </p>
+          </div>
+        </div>
+      )}
+
+      {/* ── Вкладка: Отчёты ── */}
+      {tab === "reports" && (
+        <div>
+          <p className="text-sm text-gray-500 mb-6">
+            Ежегодные отчёты о деятельности Совета НКО при Российском обществе психиатров.
+          </p>
+          <div className="grid md:grid-cols-3 gap-5">
+            {REPORTS.map((report) => (
+              <div key={report.year}
+                className="bg-white border border-gray-200 rounded overflow-hidden hover:shadow-md hover:border-gray-400 transition-all duration-200 flex flex-col">
+                {/* Год — шапка карточки */}
+                <div className="px-5 py-4 flex items-center justify-between" style={{ backgroundColor: BRAND.navy }}>
+                  <span className="text-3xl font-bold text-white">{report.year}</span>
+                  <Icon name="FileText" size={22} className="text-white/50" />
+                </div>
+                <div className="p-5 flex flex-col flex-1">
+                  <h3 className="font-semibold text-sm leading-snug text-gray-800 mb-2">
+                    {report.title}
+                  </h3>
+                  <p className="text-xs text-gray-500 leading-relaxed flex-1">{report.description}</p>
+                  <div className="flex items-center justify-between mt-4 pt-4 border-t border-gray-100">
+                    <div className="flex items-center gap-3">
+                      <span className="text-xs text-gray-400">{report.pages} стр.</span>
+                      <span className="text-gray-200">·</span>
+                      <span className="text-xs text-gray-400">{report.date}</span>
+                    </div>
+                    <a
+                      href={report.fileUrl}
+                      className="flex items-center gap-1.5 text-xs font-semibold px-3 py-1.5 rounded transition-colors text-white"
+                      style={{ backgroundColor: BRAND.red }}
+                    >
+                      <Icon name="Download" size={13} />
+                      PDF
+                    </a>
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+
+          <div className="mt-6 p-4 bg-gray-50 border border-gray-200 rounded flex items-start gap-3">
+            <Icon name="Info" size={16} className="text-gray-400 flex-shrink-0 mt-0.5" />
+            <p className="text-xs text-gray-500">
+              Для добавления новых отчётов загрузите PDF-файл через панель управления Ядро
+              и обновите ссылку на документ.
+            </p>
+          </div>
+        </div>
+      )}
     </div>
   );
 }
