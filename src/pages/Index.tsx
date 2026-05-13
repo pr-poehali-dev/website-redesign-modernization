@@ -83,39 +83,37 @@ export default function Index() {
   return (
     <div className="min-h-screen flex flex-col" style={{ backgroundColor: BRAND.bg, fontFamily: "'Inter', sans-serif" }}>
 
-      {/* ── Hero-шапка ── */}
-      <header style={{ background: `linear-gradient(135deg, ${BRAND.navyDark} 0%, ${BRAND.navy} 60%, ${BRAND.navyLight} 100%)` }}>
-        <div className="max-w-7xl mx-auto px-6 py-5 flex items-center justify-between">
+      {/* ── Шапка ── */}
+      <header className="bg-white shadow-sm border-b border-gray-100">
+        <div className="max-w-6xl mx-auto px-5 md:px-10 py-4 flex items-center justify-between">
           <div className="flex items-center gap-4">
-            {/* Логотип Совета НКО при РОП — основной */}
             <img
               src="https://cdn.poehali.dev/projects/64a22a44-84da-402b-b52f-cd0f436152dc/bucket/bcaa3365-e019-4fe8-831f-e211788eb9a7.png"
               alt="Совет НКО при РОП"
               className="h-20 w-auto flex-shrink-0"
             />
-            <div>
-              <h1 className="text-white font-bold text-base md:text-lg leading-snug">
+            <div className="border-l border-gray-200 pl-4">
+              <h1 className="font-bold text-base md:text-lg leading-snug" style={{ color: BRAND.navyDark }}>
                 Совет НКО при Российском обществе психиатров
               </h1>
-              <p className="text-white/60 text-xs mt-0.5 tracking-wide">
+              <p className="text-gray-400 text-xs mt-0.5 tracking-wide">
                 Союз охраны психического здоровья · с 2018 года
               </p>
             </div>
           </div>
-          {/* Логотип СОПЗ — справа */}
           <a href="https://mental-health-russia.ru" target="_blank" rel="noopener noreferrer"
             className="hidden md:flex items-center gap-3 group">
             <img
               src="https://cdn.poehali.dev/projects/64a22a44-84da-402b-b52f-cd0f436152dc/bucket/6356785c-6fbe-4fd3-9669-7d40891d9663.png"
               alt="Союз охраны психического здоровья"
-              className="h-10 w-auto brightness-0 invert opacity-60 group-hover:opacity-90 transition-opacity"
+              className="h-12 w-auto opacity-70 group-hover:opacity-100 transition-opacity"
             />
           </a>
         </div>
 
-        {/* Навигация внутри шапки */}
-        <div className="border-t border-white/10">
-          <div className="max-w-7xl mx-auto px-6">
+        {/* Навигация */}
+        <div className="border-t border-gray-100" style={{ backgroundColor: BRAND.navy }}>
+          <div className="max-w-6xl mx-auto px-5 md:px-10">
             <ul className="hidden md:flex">
               {NAV_ITEMS.map((item) => {
                 const isActive = activeSection === item.id;
@@ -124,7 +122,7 @@ export default function Index() {
                     <button
                       onClick={() => goTo(item.id)}
                       className="px-5 py-3.5 text-sm font-medium transition-all duration-200 relative"
-                      style={{ color: isActive ? "#fff" : "rgba(255,255,255,0.6)" }}
+                      style={{ color: isActive ? "#fff" : "rgba(255,255,255,0.55)" }}
                     >
                       {item.label}
                       {isActive && (
