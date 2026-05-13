@@ -29,10 +29,8 @@ const DOC_CATEGORIES = [
 ];
 
 const WORKING_GROUPS = [
-  { title: "Рабочая группа по инклюзивному образованию", chair: "к.п.н. Багарадникова Е.В.", members: 7, nextMeeting: "20 мая 2026", icon: "GraduationCap" },
-  { title: "Рабочая группа по волонтерству", chair: "Петров С.В.", members: 5, nextMeeting: "27 мая 2026", icon: "Heart" },
-  { title: "Рабочая группа по правовым вопросам", chair: "д.ю.н. Сидорова Е.Н.", members: 9, nextMeeting: "3 июня 2026", icon: "Scale" },
-  { title: "Рабочая группа по сопровождаемому проживанию и трудовой занятости", chair: "Толпекина Н.В.", members: 6, nextMeeting: "10 июня 2026", icon: "Home" },
+  { title: "Рабочая группа по волонтерству", chair: "Петров С.В.", members: 5, nextMeeting: "Дата уточняется", icon: "Heart" },
+  { title: "Рабочая группа по сопровождаемому проживанию и трудовой занятости", chair: "Толпекина Н.В.", members: 6, nextMeeting: "Дата уточняется", icon: "Home" },
 ];
 
 const EVENTS = [
