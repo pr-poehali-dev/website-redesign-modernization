@@ -163,7 +163,7 @@ export default function Index() {
       </header>
 
       {/* ── Контент ── */}
-      <main className="flex-1 max-w-7xl mx-auto w-full px-4 md:px-6 py-8 animate-fade-in">
+      <main className="flex-1 max-w-6xl mx-auto w-full px-5 md:px-10 py-12 animate-fade-in">
         {renderSection()}
       </main>
 
@@ -209,15 +209,15 @@ export default function Index() {
 /* ─── Заголовок раздела ─── */
 function SectionHeader({ title, subtitle, accent }: { title: string; subtitle?: string; accent?: string }) {
   return (
-    <div className="mb-8">
+    <div className="mb-10">
       {accent && (
-        <span className="inline-block text-xs font-semibold uppercase tracking-widest mb-2 px-3 py-1 rounded-full"
+        <span className="inline-block text-xs font-semibold uppercase tracking-widest mb-3 px-3 py-1 rounded-full"
           style={{ backgroundColor: `${BRAND.navy}15`, color: BRAND.navy }}>
           {accent}
         </span>
       )}
       <h2 className="text-3xl font-bold tracking-tight" style={{ color: BRAND.navyDark }}>{title}</h2>
-      {subtitle && <p className="text-gray-500 mt-2 text-sm leading-relaxed max-w-2xl">{subtitle}</p>}
+      {subtitle && <p className="text-gray-400 mt-2.5 text-[15px] leading-relaxed max-w-2xl">{subtitle}</p>}
     </div>
   );
 }
@@ -238,7 +238,7 @@ function Pill({ children, red }: { children: React.ReactNode; red?: boolean }) {
 /* ─── Карточка ─── */
 function Card({ children, className = "", hover = true }: { children: React.ReactNode; className?: string; hover?: boolean }) {
   return (
-    <div className={`bg-white rounded-2xl shadow-sm border border-white/80 ${hover ? "hover:shadow-md hover:-translate-y-0.5" : ""} transition-all duration-200 ${className}`}>
+    <div className={`bg-white rounded-2xl shadow-sm border border-gray-100 ${hover ? "hover:shadow-md hover:-translate-y-0.5" : ""} transition-all duration-200 ${className}`}>
       {children}
     </div>
   );
@@ -308,14 +308,14 @@ function AboutSection() {
       {tab === "info" && (
         <div className="space-y-6">
           {/* Статы */}
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-5">
             {[
               { label: "Регионов РФ", value: "85", icon: "MapPin" },
               { label: "Членов совета", value: "104", icon: "Users" },
               { label: "Рабочих групп", value: "4", icon: "Layers" },
               { label: "Лет работы", value: "8", icon: "Calendar" },
             ].map((stat) => (
-              <Card key={stat.label} className="p-5">
+              <Card key={stat.label} className="p-6">
                 <div className="flex items-start justify-between mb-3">
                   <div className="w-9 h-9 rounded-xl flex items-center justify-center"
                     style={{ backgroundColor: `${BRAND.navy}12` }}>
@@ -331,7 +331,7 @@ function AboutSection() {
           {/* Описание + цитаты */}
           <div className="grid md:grid-cols-5 gap-6">
             <div className="md:col-span-3 space-y-4">
-              <Card className="p-6">
+              <Card className="p-7">
                 <p className="text-[15px] leading-relaxed text-gray-700">
                   Совет некоммерческих организаций в сфере охраны психического здоровья при Российском обществе
                   психиатров – структура, призванная наладить тесное взаимодействие между НКО и профессиональным
@@ -534,9 +534,9 @@ function GroupsSection() {
       <SectionHeader title="Рабочие группы" accent="Экспертная работа"
         subtitle="Специализированные группы по ключевым направлениям деятельности Совета" />
 
-      <div className="grid md:grid-cols-2 gap-5">
+      <div className="grid md:grid-cols-2 gap-6">
         {WORKING_GROUPS.map((group, idx) => (
-          <Card key={idx} className="p-6">
+          <Card key={idx} className="p-7">
             <div className="flex items-start gap-4 mb-4">
               <div className="w-12 h-12 rounded-2xl flex items-center justify-center flex-shrink-0"
                 style={{ background: `linear-gradient(135deg, ${BRAND.navy}, ${BRAND.navyLight})` }}>
@@ -594,7 +594,7 @@ function MaterialsSection() {
         subtitle="Руководства, стандарты и рекомендации для специалистов в сфере охраны психического здоровья" />
       <div className="space-y-3">
         {materials.map((mat, idx) => (
-          <Card key={idx} className="flex items-center gap-4 p-4 cursor-pointer group">
+          <Card key={idx} className="flex items-center gap-5 p-5 cursor-pointer group">
             <div className="w-11 h-13 rounded-xl flex items-center justify-center flex-shrink-0"
               style={{ background: `linear-gradient(135deg, ${BRAND.navy}12, ${BRAND.navy}06)` }}>
               <Icon name="FileText" size={18} style={{ color: BRAND.navy }} />
@@ -699,13 +699,13 @@ function DocumentsSection({ activeCategory, setActiveCategory }: { activeCategor
   return (
     <div className="animate-slide-up space-y-5">
       <SectionHeader title="Документы" accent="База знаний" subtitle="Выберите раздел для просмотра документов" />
-      <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-4">
+      <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-5">
         {DOC_CATEGORIES.map((cat, idx) => {
           const color = catColors[idx] || BRAND.navy;
           return (
             <button key={cat.id} onClick={() => setActiveCategory(cat.id)}
               className="text-left group">
-              <Card className="p-5 h-full">
+              <Card className="p-6 h-full">
                 <div className="flex items-start justify-between mb-4">
                   <div className="w-12 h-12 rounded-2xl flex items-center justify-center text-white flex-shrink-0 group-hover:scale-105 transition-transform"
                     style={{ background: `linear-gradient(135deg, ${color}, ${color}bb)` }}>
@@ -754,7 +754,7 @@ function CalendarSection() {
         ))}
       </div>
 
-      <div className="space-y-3">
+      <div className="space-y-3.5">
         {EVENTS.map((event, idx) => {
           const meta = typeStyle[event.type];
           return (
@@ -811,7 +811,7 @@ function ContactsSection() {
     <div className="animate-slide-up space-y-6">
       <SectionHeader title="Контакты" accent="Связь с нами" subtitle="Свяжитесь с нами по любым вопросам деятельности Совета" />
 
-      <div className="grid md:grid-cols-2 gap-6">
+      <div className="grid md:grid-cols-2 gap-8">
         <div className="space-y-4">
           {[
             { icon: "MapPin", label: "Адрес", value: "г. Москва, ул. Примерная, д. 1, оф. 101" },
