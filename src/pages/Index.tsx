@@ -22,7 +22,7 @@ const NAV_ITEMS = [
 
 const DOC_CATEGORIES = [
   { id: "inclusive", title: "Инклюзивное образование", icon: "GraduationCap", count: 12, description: "Нормативные и методические документы по организации инклюзивного образования для лиц с психическими расстройствами" },
-  { id: "volunteering", title: "Волонтерство в психиатрии", icon: "Heart", count: 8, description: "Руководства, регламенты и материалы для волонтёров, работающих в психиатрических учреждениях" },
+  { id: "volunteering", title: "Волонтерство в психиатрии", icon: "Heart", count: 23, description: "Нормативные правовые акты РФ в сфере добровольчества (волонтерства)" },
   { id: "educational", title: "Образовательный проект", icon: "BookOpen", count: 15, description: "Учебные программы, методики преподавания и образовательные стандарты" },
   { id: "control", title: "Общественный контроль в психиатрии", icon: "Shield", count: 10, description: "Документы по мониторингу соблюдения прав пациентов психиатрических учреждений" },
   { id: "legal", title: "Нормативно-правовые акты", icon: "Scale", count: 24, description: "Федеральные законы, приказы, постановления и международные акты в области психиатрии" },
@@ -618,8 +618,30 @@ function DocumentsSection({ activeCategory, setActiveCategory }: { activeCategor
       { title: "Методические указания по адаптации учебных программ", date: "10.11.2024", num: "МУ-08/24" },
     ],
     volunteering: [
-      { title: "Регламент волонтёрской деятельности в психиатрических стационарах", date: "05.04.2025", num: "Р-03/25" },
-      { title: "Договор о добровольческой деятельности (типовая форма)", date: "01.02.2025", num: "Т-01/25" },
+      { title: "Конституция Российской Федерации", date: "", num: "Основной закон РФ", url: "http://www.kremlin.ru/acts/constitution" },
+      { title: "Гражданский кодекс Российской Федерации", date: "", num: "ГК РФ", url: "http://www.kremlin.ru/acts/bank/7279" },
+      { title: "Федеральный закон от 19.05.1995 № 82-ФЗ «Об общественных объединениях»", date: "19.05.1995", num: "№ 82-ФЗ", url: "http://www.kremlin.ru/acts/bank/7877" },
+      { title: "Федеральный закон от 11.08.1995 № 135-ФЗ «О благотворительной деятельности и добровольчестве (волонтерстве)»", date: "11.08.1995", num: "№ 135-ФЗ", url: "http://pravo.gov.ru/proxy/ips/?docbody=&nd=102037027" },
+      { title: "Федеральный закон от 12.01.1996 № 7-ФЗ «О некоммерческих организациях»", date: "12.01.1996", num: "№ 7-ФЗ", url: "http://www.kremlin.ru/acts/bank/8742" },
+      { title: "Федеральный закон от 21.11.2011 № 323-ФЗ «Об основах охраны здоровья граждан в Российской Федерации»", date: "21.11.2011", num: "№ 323-ФЗ", url: "http://www.kremlin.ru/acts/bank/34333" },
+      { title: "Федеральный закон от 05.02.2018 № 15-ФЗ «О внесении изменений по вопросам добровольчества (волонтерства)»", date: "05.02.2018", num: "№ 15-ФЗ", url: "http://www.kremlin.ru/acts/bank/42800" },
+      { title: "Федеральный закон от 23.04.2018 № 98-ФЗ «О внесении изменений в часть вторую Налогового кодекса РФ»", date: "23.04.2018", num: "№ 98-ФЗ", url: "http://www.kremlin.ru/acts/bank/42993" },
+      { title: "Указ Президента РФ от 27.11.2017 № 572 «О дне добровольца (волонтера)»", date: "27.11.2017", num: "№ 572", url: "http://www.kremlin.ru/acts/bank/42521" },
+      { title: "Указ Президента РФ от 21.07.2020 № 474 «О национальных целях развития РФ на период до 2030 года»", date: "21.07.2020", num: "№ 474", url: "http://www.kremlin.ru/events/president/news/63728" },
+      { title: "Постановление Правительства РФ от 28.11.2018 № 1425 «Об утверждении общих требований к порядку взаимодействия с организаторами добровольческой деятельности»", date: "28.11.2018", num: "№ 1425", url: "https://base.garant.ru/72116618/" },
+      { title: "Постановление Правительства РФ от 17.08.2019 № 1067 «О единой информационной системе в сфере развития добровольчества»", date: "17.08.2019", num: "№ 1067", url: "http://publication.pravo.gov.ru/Document/View/0001201908230008" },
+      { title: "Перечень поручений по итогам заседания Государственного совета РФ (утв. 16.01.2019 № Пр-38 ГС)", date: "16.01.2019", num: "Пр-38 ГС", url: "http://www.kremlin.ru/acts/assignments/orders/59686" },
+      { title: "Распоряжение Правительства РФ от 29.11.2014 № 2403-р «Основы государственной молодежной политики РФ на период до 2025 года»", date: "29.11.2014", num: "№ 2403-р", url: "http://publication.pravo.gov.ru/Document/View/0001201412080039" },
+      { title: "Распоряжение Правительства РФ от 27.11.2018 № 2950-р «Концепция развития добровольчества (волонтерства) в РФ до 2025 года»", date: "27.11.2018", num: "№ 2950-р", url: "http://publication.pravo.gov.ru/Document/View/0001201812280070" },
+      { title: "План мероприятий по развитию волонтерского движения в РФ (утв. 05.07.2017 № 4723п-П44)", date: "05.07.2017", num: "№ 4723п-П44", url: "https://www.economy.gov.ru/material/file/c55b94e15be724588ca1965ff72ddfee/plan_mer.N4723%D0%BF-%D0%9F44.pdf" },
+      { title: "План мероприятий по популяризации добровольчества и СОНКО (утв. 19.06.2019 № 5377п-П44)", date: "19.06.2019", num: "№ 5377п-П44", url: "https://www.economy.gov.ru/material/file/94dd7033eb6cce6b438e871ddf24c69d/plan_mer.N5377%D0%BF-%D0%9F44.pdf" },
+      { title: "План мероприятий по реализации Концепции добровольчества до 2025 года (утв. 20.06.2019 № 5486п-П44)", date: "20.06.2019", num: "№ 5486п-П44", url: "https://www.economy.gov.ru/material/file/b09c207c267b5d01ba0ffcb8c82312f8/plan_mer.N5486%D0%BF-%D0%9F44.pdf" },
+      { title: "Приказ Минздрава РФ от 11.05.2017 № 212н «Об утверждении Порядка приема на обучение по программам ординатуры»", date: "11.05.2017", num: "№ 212н", url: "https://base.garant.ru/71692980/" },
+      { title: "Приказ Минздрава РФ от 26.09.2017 № 678 «О Федеральном центре поддержки добровольчества в сфере охраны здоровья»", date: "26.09.2017", num: "№ 678", url: "https://drive.google.com/file/d/1ep0Z7cQzmXY6euIJdQhmzkioyuyqo-5M/view" },
+      { title: "Приказ Минздрава РФ от 26.02.2019 № 96н «О порядке взаимодействия учреждений Минздрава с организаторами добровольческой деятельности»", date: "26.02.2019", num: "№ 96н", url: "http://publication.pravo.gov.ru/Document/View/0001201907150022" },
+      { title: "Приказ Минздрава РФ от 28.04.2021 № 413н «Об особенностях приема на обучение по программам ординатуры на 2021/22 учебный год»", date: "28.04.2021", num: "№ 413н", url: "http://publication.pravo.gov.ru/Document/View/0001202105310017" },
+      { title: "Письмо Минздрава РФ от 25.12.2018 № 28-2/10/2-625 «О Стратегии поддержки добровольческой деятельности в сфере охраны здоровья»", date: "25.12.2018", num: "№ 28-2/10/2-625", url: "https://drive.google.com/file/d/1ageWfllmr4Vl4O7bIQ5p8Lc_wsDeyZza/view" },
+      { title: "Письмо Минздрава РФ от 26.03.2021 № 28-1/И/2-4624 «О Стандарте поддержки добровольческой деятельности в сфере охраны здоровья на 2021 год»", date: "26.03.2021", num: "№ 28-1/И/2-4624", url: "https://law.tks.ru/document/740095" },
     ],
     educational: [
       { title: "Программа повышения квалификации специалистов", date: "22.03.2025", num: "ПП-05/25" },
@@ -664,23 +686,27 @@ function DocumentsSection({ activeCategory, setActiveCategory }: { activeCategor
         </div>
         <div className="space-y-3">
           {docs.map((doc, idx) => (
-            <Card key={idx} className="flex items-center gap-4 p-4 cursor-pointer group">
-              <div className="w-10 h-10 rounded-xl flex items-center justify-center flex-shrink-0"
-                style={{ backgroundColor: `${color}12` }}>
-                <Icon name="FileText" size={16} style={{ color }} />
-              </div>
-              <div className="flex-1 min-w-0">
-                <p className="font-medium text-sm text-gray-800 group-hover:text-blue-900 transition-colors">{doc.title}</p>
-                <div className="flex items-center gap-2 mt-1">
-                  <span className="text-xs text-gray-400">{doc.num}</span>
-                  <span className="text-gray-200">·</span>
-                  <span className="text-xs text-gray-400">{doc.date}</span>
+            <a key={idx} href={doc.url || undefined} target="_blank" rel="noopener noreferrer"
+              className="block" style={{ textDecoration: "none" }}>
+              <Card className="flex items-center gap-4 p-4 cursor-pointer group">
+                <div className="w-10 h-10 rounded-xl flex items-center justify-center flex-shrink-0"
+                  style={{ backgroundColor: `${color}12` }}>
+                  <Icon name="FileText" size={16} style={{ color }} />
                 </div>
-              </div>
-              <div className="w-8 h-8 rounded-lg flex items-center justify-center flex-shrink-0 bg-gray-100 group-hover:bg-red-50 transition-colors">
-                <Icon name="Download" size={14} className="text-gray-400 group-hover:text-red-500 transition-colors" />
-              </div>
-            </Card>
+                <div className="flex-1 min-w-0">
+                  <p className="font-medium text-sm text-gray-800 group-hover:text-blue-900 transition-colors">{doc.title}</p>
+                  <div className="flex items-center gap-2 mt-1">
+                    <span className="text-xs text-gray-400">{doc.num}</span>
+                    {doc.date && <><span className="text-gray-200">·</span><span className="text-xs text-gray-400">{doc.date}</span></>}
+                  </div>
+                </div>
+                {doc.url && (
+                  <div className="w-8 h-8 rounded-lg flex items-center justify-center flex-shrink-0 bg-gray-100 group-hover:bg-red-50 transition-colors">
+                    <Icon name="ExternalLink" size={14} className="text-gray-400 group-hover:text-red-500 transition-colors" />
+                  </div>
+                )}
+              </Card>
+            </a>
           ))}
         </div>
       </div>
