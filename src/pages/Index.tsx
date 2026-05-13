@@ -90,7 +90,7 @@ export default function Index() {
             <img
               src="https://cdn.poehali.dev/projects/64a22a44-84da-402b-b52f-cd0f436152dc/bucket/bcaa3365-e019-4fe8-831f-e211788eb9a7.png"
               alt="Совет НКО при РОП"
-              className="h-20 w-auto flex-shrink-0"
+              className="h-[200px] w-auto flex-shrink-0"
             />
             <div className="border-l border-gray-200 pl-4">
               <h1 className="font-bold text-base md:text-lg leading-snug" style={{ color: BRAND.navyDark }}>
